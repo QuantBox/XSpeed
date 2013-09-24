@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- edited with XMLSPY v2004 rel. 4 U -->
+<!DOCTYPE errors SYSTEM "error.dtd">
+<errors>
+<!-- add for begin -->
+	<error id="" value="1"     prompt="已存在委托无需补单"/>
+	<error id="" value="1"     prompt="已存在撤单无需补单"/>
+	<error id="" value="1"     prompt="本地报单无需处理"/>
+	<error id="" value="1"     prompt="该委托已经成功再次申请撤单!"/>
+	<error id="" value="2"     prompt="该委托已经成功再次申请撤单!"/>
+	<error id="" value="-1"    prompt="没有登录"/>
+	<error id="" value="-2"    prompt="无效的合约。"/>
+	<error id="" value="-2"    prompt="启动UDP线程失败!"/>
+	<error id="" value="-4"    prompt="成交与委托记录买卖方向相反!"/>
+	<error id="" value="-5"    prompt="成交开平方向与委托不一致!"/>
+	<error id="" value="-5"    prompt="找不到该资金账号所对应的撤单委托号(%)!"/>
+	<error id="" value="-5"    prompt="找不到可以交易的交易编码!"/>
+	<error id="" value="-6"    prompt="系统不允许空密码登录"/>
+	<error id="" value="-6"    prompt="成交与委托交易编码不一致"/>
+	<error id="" value="-9"    prompt="超量成交!"/>
+	<error id="" value="-11"   prompt="成交与委托的合约代码不一致"/>
+	<error id="" value="-100"  prompt="报单回报:交易编码未登记无法处理"/>
+	<error id="" value="-100"  prompt="重复回报"/>
+	<error id="" value="-101"  prompt="组合申报确认:系统内无此委托!交易所:%s,席位:%s"/>
+	<error id="" value="-101"  prompt="申报确认:系统内无此委托!交易所:%s,席位:%s"/>
+	<error id="" value="-101"  prompt="撤单已处理过"/>
+	<error id="" value="-101"  prompt="撤单数量无效"/>
+	<error id="" value="-101"  prompt="超量撤单"/>
+	<error id="" value="-101"  prompt="撤单回报:系统内无此委托!"/>
+	<error id="" value="-101"  prompt="合同号:%li对应的委托不存在!"/>
+	<error id="" value="-101"  prompt="超量撤单"/>
+	<error id="" value="-101"  prompt="组合撤单回报:系统内无此委托!"/>
+	<error id="" value="-101"  prompt="合同号:%li对应的交易所组合委托不存在!"/>
+	<error id="" value="-101"  prompt="找不到该合约对应的本地委托号!"/>
+	<error id="" value="-102"  prompt="原委托的客户信息与输入的客户信息不匹配!"/>
+	<error id="" value="-102"  prompt="无效的开平标志，该交易所只能开仓或平仓"/>
+	<error id="" value="-103"  prompt="该委托已经成交或已经撤单成功,不能再撤单!"/>
+	<error id="" value="-103"  prompt="实时清算:无此交易编码:"/>
+	<error id="" value="-103"  prompt="无效的投资类别,该交易所只能投机或套保交易"/>
+	<error id="" value="-103"  prompt="找不到该资金账号所对应的撤单委托号"/>
+	<error id="" value="-104"  prompt="强平单不允许撤单!"/>
+	<error id="" value="-105"  prompt="系交易所和合约不匹配,该合约所属交易所:%, 参数值:%"/>
+	<error id="" value="-105"  prompt="交易所和合约不匹配!"/>
+	<error id="" value="-106"  prompt="该委托交易所未回复结果,暂时不允许撤单,请稍后再撤!"/>
+	<error id="" value="-107"  prompt="撤单回报:委托数据更新失败!"/>
+	<error id="" value="-107"  prompt="申报确认:修改委托表申报结果出错!"/>
+	<error id="" value="-107"  prompt="组合申报确认:修改委托表申报结果出错!"/>
+	<error id="" value="-107"  prompt="组合撤单回报:委托数据更新失败!"/>
+	<error id="" value="-108"  prompt="撤单回报:修改委托冻结余额出错!"/>
+	<error id="" value="-108"  prompt="修改资金帐户委托冻结余额出错!"/>
+	<error id="" value="-108"  prompt="申报确认:修改资金帐户委托冻结余额出错!"/>
+	<error id="" value="-109"  prompt="该代码不支持互换交易"/>
+	<error id="" value="-109"  prompt="该组合腿数超过互换交易腿数"/>
+	<error id="" value="-109"  prompt="组合代码无效!"/>
+	<error id="" value="-111"  prompt="撤单失败,持仓解冻小于撤单数量"/>
+	<error id="" value="-112"  prompt="修改委托记录失败,请重新再撤!"/>
+	<error id="" value="-120"  prompt="撤单失败,组合腿数和实际合约腿数不符"/>
+	<error id="" value="-121"  prompt="委托失败,组合腿数和实际合约腿数不符"/>
+	<error id="" value="-124"  prompt="委托数量无效"/>
+	<error id="" value="-135"  prompt="委托价格超过涨跌停板价格，不能交易"/>
+	<error id="" value="-142"  prompt="委托失败,客户资金不足,差:%.2lf"/>
+	<error id="" value="-150"  prompt="委托失败,合约:%s可平仓位不足! 最多可平:%li"/> 
+	<error id="" value="-150"  prompt="实时清算:平仓成交冻结不足!"/> 
+	<error id="" value="-150"  prompt="平仓成交修改持仓失败!"/>
+	<error id="" value="-151"  prompt="修改客户冻结资金出错!"/>
+	<error id="" value="-209"  prompt="您输入的委托价格%.3lf无效"/>
+	<error id="" value="-210"  prompt="本交易所不支持市价指令"/>
+	<error id="" value="-998"  prompt="插入持仓表失败"/>
+	<error id="" value="-998"  prompt="组合合约[%s],腿号[%d]非法"/>
+	<error id="" value="-999"  prompt="组合合约腿号不连续,缺[%d],共[%d]腿"/>
+	<error id="" value="-999"  prompt="更新委托表失败"/>
+	<error id="" value="-999"  prompt="密码校验错误,非法委托!"/>
+	<error id="" value="-999"  prompt="更新资金表失败"/>
+	<error id="" value="-9998" prompt="pFU_WTCJLOCK调用错误"/>
+	<error id="" value="-9999" prompt="未知开平标记"/>
+	<error id="" value="-10000" prompt="您使用的API版本号过低，请升级"/>
+<!-- add for end -->
+</errors>
