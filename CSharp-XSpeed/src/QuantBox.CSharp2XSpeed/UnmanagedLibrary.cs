@@ -19,7 +19,7 @@ namespace QuantBox.CSharp2XSpeed
     /// </remarks>
     internal sealed class UnmanagedLibrary : IDisposable
     {
-        private static readonly string CurrentArch = Environment.Is64BitProcess ? "x64" : "x86";
+        private static readonly string CurrentArch = IntPtr.Size == 8 ? "x64" : "x86";
 
         private readonly string _fileName;
         private readonly SafeLibraryHandle _handle;
@@ -36,7 +36,7 @@ namespace QuantBox.CSharp2XSpeed
                 throw new ArgumentNullException("fileName");
             }
 
-            if (string.IsNullOrWhiteSpace(fileName)) {
+            if (String.IsNullOrEmpty(fileName) || fileName.Trim().Length == 0) {
                 throw new ArgumentException("A valid file name is expected.", "fileName");
             }
 
