@@ -561,7 +561,7 @@ struct APISTRUCT DFITCPositionDetailRtnField
     DFITCPriceType                      openPrice;                    //开仓价
     DFITCAmountType                     volume;                       //手数
     DFITCMatchIDType                    matchID;                      //成交编号
-    DFITCDateType                       matchedData;                  //成交日期
+    DFITCDateType                       matchedDate;                  //成交日期
     DFITCProfitLossType                 datePositionProfitLoss;       //盯市持仓盈亏
     DFITCProfitLossType                 dateCloseProfitLoss;          //盯市平仓盈亏
     DFITCProfitLossType                 floatProfitLoss;              //浮动盈亏
