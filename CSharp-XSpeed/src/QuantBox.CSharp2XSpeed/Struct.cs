@@ -72,6 +72,18 @@ namespace QuantBox.CSharp2XSpeed
         /// 合约类型, 可选值：期货、期权， 目前只支持期货。
         /// </summary>
         public DFITCInstrumentTypeType instrumentType;
+        /// <summary>
+        /// 预留字段1
+        /// </summary>
+        public int reservedType1;
+        /// <summary>
+        /// 预留字段2
+        /// </summary>
+        public int reservedType2;
+        /// <summary>
+        /// 请求ID
+        /// </summary>
+        public int lRequestID;
     };
 
     /// <summary>
@@ -98,7 +110,10 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
         public string InstrumentID;
-
+        /// <summary>
+        /// 请求ID
+        /// </summary>
+        public int lRequestID;
     };
 
     /// <summary>
@@ -120,6 +135,18 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         [MarshalAs(UnmanagedType.I2)]
         public DFITCOrderAnswerStatusType orderStatus;
+        /// <summary>
+        /// 请求ID
+        /// </summary>
+        public int lRequestID;
+        /// <summary>
+        /// 手续费,该字段仅供下单时使用
+        /// </summary>
+        public double poundage;
+        /// <summary>
+        /// 冻结保证金,该字段仅供下单时使用
+        /// </summary>
+        public double margin;
     };
 
     /// <summary>
@@ -189,6 +216,11 @@ namespace QuantBox.CSharp2XSpeed
         /// 合约类型
         /// </summary>
         public DFITCInstrumentTypeType instrumentType;
+        /// <summary>
+        /// 合约最后交易日
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
+        public string instrumentMaturity;
     };
 
     /// <summary>
@@ -423,13 +455,18 @@ namespace QuantBox.CSharp2XSpeed
         [MarshalAs(UnmanagedType.I2)]
         public DFITCOrderAnswerStatusType orderStatus;
         /// <summary>
-        /// 预留字段1
+        /// 开仓为保证金,平仓为解冻保证金
         /// </summary>
-        public int reservedType1;
+        public double margin;
         /// <summary>
-        /// 预留字段2
+        /// 成交解冻委托冻结的资金
         /// </summary>
-        public int reservedType2;
+        public double frozenCapita;
+        /// <summary>
+        /// 组合或对锁的保证金调整信息,格式:[合约代码,买卖标志,投资类别,调整金额;]
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string adjustmentInfo;
     };
 
     /// <summary>
@@ -954,6 +991,11 @@ namespace QuantBox.CSharp2XSpeed
         /// 最小变动价位
         /// </summary>
         public double minPriceFluctuation;
+        /// <summary>
+        /// 合约最后交易日
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
+        public string instrumentMaturity;
     };
 
     /// <summary>
@@ -1099,6 +1141,11 @@ namespace QuantBox.CSharp2XSpeed
         /// 预留字段2
         /// </summary>
         public int reservedType2;
+        /// <summary>
+        /// 报单编号
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public int OrderSysID;
     };
 
     /// <summary>
@@ -1250,6 +1297,11 @@ namespace QuantBox.CSharp2XSpeed
         /// 合约类型
         /// </summary>
         public DFITCInstrumentTypeType instrumentType;
+        /// <summary>
+        /// 合约最后交易日
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
+        public string instrumentMaturity;
     };
 
     /// <summary>
@@ -1515,7 +1567,7 @@ namespace QuantBox.CSharp2XSpeed
         /// 成交日期
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
-        public string matchedData;
+        public string matchedDate;
         /// <summary>
         /// 盯市持仓盈亏
         /// </summary>
@@ -1617,3 +1669,145 @@ namespace QuantBox.CSharp2XSpeed
         public short EnterReason;
     };
 }
+/*
+
+
+///用户密码修改
+struct APISTRUCT DFITCResetPwdField
+{
+    DFITCRequestIDType                  lRequestID;                   //请求ID
+    DFITCAccountIDType                  accountID;                    //资金帐号ID
+    DFITCPasswdType                     oldpasswd;                    //旧密码
+    DFITCPasswdType                     newpasswd;                    //新密码
+
+    DFITCResetPwdField();
+};
+
+
+///用户密码修改返回信息
+struct APISTRUCT DFITCResetPwdRspField
+{
+    DFITCRequestIDType                  lRequestID;                   //请求ID
+    DFITCAccountIDType                  accountID;                    //资金账户ID
+    DFITCExecStateType                  execState;                    //状态标志
+
+    DFITCResetPwdRspField();
+};
+
+
+///账单确认
+struct APISTRUCT DFITCBillConfirmField
+{
+    DFITCRequestIDType                  lRequestID;                   //请求ID
+    DFITCAccountIDType                  accountID;                    //资金帐号ID
+    DFITCDateType                       date;                         //确认日期
+    DFITCConfirmMarkType                confirmFlag;                  //确认标志
+
+    DFITCBillConfirmField();
+};
+
+
+///账单确认响应
+struct APISTRUCT DFITCBillConfirmRspField
+{
+    DFITCRequestIDType                  lRequestID;                   //请求ID
+    DFITCAccountIDType                  accountID;                    //资金账户ID
+    DFITCExecStateType                  execState;                    //状态标志
+
+    DFITCBillConfirmRspField();
+};
+
+
+///交易编码查询
+struct APISTRUCT DFITCQryTradeCodeField
+{
+    DFITCRequestIDType                  lRequestID;                   //请求ID
+    DFITCAccountIDType                  accountID;                    //资金账户ID
+
+    DFITCQryTradeCodeField();
+};
+
+
+///交易编码查询响应
+struct APISTRUCT DFITCQryTradeCodeRtnField
+{
+    DFITCRequestIDType                  lRequestID;                   //请求ID
+    DFITCAccountIDType                  accountID;                    //资金账户
+    DFITCExchangeIDType                 exchangeCode;                 //交易所编码
+    DFITCClientIDType                   clientID;                     //交易编码 
+    DFITCClientStatusType               clientStatus;                 //交易编码状态
+    DFITCSpeculatorType                 clientIDType;                 //交易编码类型
+
+    DFITCQryTradeCodeRtnField();
+}; 
+
+
+///浮盈浮亏是否计算到权益中
+struct APISTRUCT DFITCEquityComputModeRtnField
+{
+    DFITCCapControlModeType             capConMode;                   //资金控制方式
+    DFITCEquityComputModeRtnField();
+};
+
+
+///查询账单
+struct APISTRUCT DFITCQryBillField
+{
+    DFITCRequestIDType                  lRequestID;                   //请求ID
+    DFITCAccountIDType                  accountID;                    //资金账户
+    DFITCDateType                       date;                         //查询日期
+
+    DFITCQryBillField();
+};
+
+
+///查询账单响应
+struct APISTRUCT DFITCQryBillRtnField 
+{
+    DFITCRequestIDType                  lRequestID;                   //请求ID
+    DFITCAccountIDType                  accountID;                    //资金账户
+    DFITCMsgInfoType                    message;                      //返回信息
+    DFITCQryBillRtnField();
+};
+
+
+///厂商ID确认请求
+struct APISTRUCT DFITCProductField
+{
+    DFITCProductIDType                  productID;                    //产品编号
+    DFITCSoftwareVendorIDType           vendorID;                     //软件供应商编号 
+    DFITCProductField();
+};
+
+
+///厂商ID确认响应
+struct APISTRUCT DFITCProductRtnField 
+{
+    DFITCProductIDType                  productID;                    //产品编号
+    DFITCSoftwareVendorIDType           vendorID;                     //软件供应商
+    DFITCProductOnlineCountType         productOnlineCount;           //产品在线数量
+    DFITCBrokerInfoType                 brokerInfoName;               //期货公司名称
+    DFITCFrontIDType                    frontID;                      //前置机ID
+    DFITCProductRtnField();
+};
+
+
+///查询交易日请求
+struct APISTRUCT DFITCTradingDayField
+{
+    DFITCRequestIDType                  lRequestID;                   //请求ID
+
+    DFITCTradingDayField();
+};
+
+
+///交易日请求响应
+struct APISTRUCT DFITCTradingDayRtnField
+{
+    DFITCRequestIDType                  lRequestID;                   //请求ID
+    DFITCDateType                       date;                         //交易日
+
+    DFITCTradingDayRtnField();
+};
+
+ */
