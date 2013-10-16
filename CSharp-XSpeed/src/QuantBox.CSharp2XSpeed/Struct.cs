@@ -1701,7 +1701,7 @@ namespace QuantBox.CSharp2XSpeed
     public struct DFITCQuoteSubscribeRtnField
     {
         /// <summary>
-        /// 交易所代码
+        /// 询价编号
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 33)]
         public string quoteID;
