@@ -47,6 +47,12 @@ namespace QuantBox.CSharp2XSpeed
         [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnOrder")]
         public static extern void XSpeed_RegOnRtnOrder(IntPtr pMsgQueue, fnOnRtnOrder pCallback);
 
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRspQuoteSubscribe")]
+        public static extern void XSpeed_RegOnRspQuoteSubscribe(IntPtr pMsgQueue, fnOnRspQuoteSubscribe pCallback);
+
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnQuoteSubscribe")]
+        public static extern void XSpeed_RegOnRtnQuoteSubscribe(IntPtr pMsgQueue, fnOnRtnQuoteSubscribe pCallback);
+
         [DllImport(CommApi.DllFileName, EntryPoint = "TD_CreateTdApi")]
         public static extern IntPtr TD_CreateTdApi();
 
@@ -108,5 +114,8 @@ namespace QuantBox.CSharp2XSpeed
 
         [DllImport(CommApi.DllFileName, EntryPoint = "TD_ReqQryOrderInfo")]
         public static extern void TD_ReqQryOrderInfo(IntPtr pTraderApi, DFITCInstrumentTypeType instrumentType);
+
+        [DllImport(CommApi.DllFileName, EntryPoint = "TD_ReqQuoteSubscribe")]
+        public static extern void TD_ReqQuoteSubscribe(IntPtr pTraderApi);
     }
 }

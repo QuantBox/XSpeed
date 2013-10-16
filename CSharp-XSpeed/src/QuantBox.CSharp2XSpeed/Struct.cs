@@ -1668,6 +1668,68 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         public short EnterReason;
     };
+
+    /// <summary>
+    /// 报价通知订阅请求
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DFITCQuoteSubscribeField
+    {
+        /// <summary>
+        /// 资金账号
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string accountID;
+    };
+
+    /// <summary>
+    /// 报价通知订阅响应
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DFITCQuoteSubscribeRspField
+    {
+        /// <summary>
+        /// 订阅状态（0成功，1失败）
+        /// </summary>
+        public short subscribeFlag;
+    };
+
+    /// <summary>
+    /// 报价通知订阅回报
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DFITCQuoteSubscribeRtnField
+    {
+        /// <summary>
+        /// 交易所代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 33)]
+        public string quoteID;
+        /// <summary>
+        /// 交易所代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string ExchangeID;
+        /// <summary>
+        /// 合约代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string InstrumentID;
+        /// <summary>
+        /// 合约类型
+        /// </summary>
+        public DFITCInstrumentTypeType instrumentType;
+        /// <summary>
+        /// 买卖标志（0买，1卖，2所有）
+        /// </summary>
+        [MarshalAs(UnmanagedType.I2)]
+        public DFITCBuySellTypeType buySellType;
+        /// <summary>
+        /// 来源    （0会员，1交易所）
+        /// </summary>
+        [MarshalAs(UnmanagedType.I2)]
+        public DFITCSourceType source;
+    };
 }
 /*
 

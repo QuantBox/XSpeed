@@ -37,4 +37,8 @@ namespace QuantBox.CSharp2XSpeed
     public delegate void fnOnRtnMatchedInfo(IntPtr pTraderApi, ref DFITCMatchRtnField pRtnMatchData);
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate void fnOnRtnOrder(IntPtr pTraderApi, ref DFITCOrderRtnField pRtnOrderData);
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate void fnOnRspQuoteSubscribe(IntPtr pTraderApi, ref DFITCQuoteSubscribeRspField pRspQuoteSubscribeData);
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate void fnOnRtnQuoteSubscribe(IntPtr pTraderApi, ref DFITCQuoteSubscribeRtnField pRtnQuoteSubscribeData);
 }
