@@ -59,6 +59,9 @@ typedef void (__stdcall *fnOnRtnCancelOrder)(void* pTraderApi, DFITCOrderCancele
 typedef void (__stdcall *fnOnRtnInstrumentStatus)(void* pTraderApi,DFITCInstrumentStatusField *pInstrumentStatus);
 typedef void (__stdcall *fnOnRtnMatchedInfo)(void* pTraderApi,DFITCMatchRtnField * pRtnMatchData);
 typedef void (__stdcall *fnOnRtnOrder)(void* pTraderApi,DFITCOrderRtnField * pRtnOrderData);
+// 做市商询价与应价
+typedef void (__stdcall *fnOnRspQuoteSubscribe)(void* pTraderApi,DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData);
+typedef void (__stdcall *fnOnRtnQuoteSubscribe)(void* pTraderApi,DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData);
 
 //创建接收消息队列，支持响应行情和交易
 QUANTBOXC2XSPEED_API void* __stdcall XSpeed_CreateMsgQueue();
@@ -82,6 +85,9 @@ QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnCancelOrder(void* pMsgQueue,f
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnInstrumentStatus(void* pMsgQueue,fnOnRtnInstrumentStatus pCallback);
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnOrder(void* pMsgQueue,fnOnRtnOrder pCallback);
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnMatchedInfo(void* pMsgQueue,fnOnRtnMatchedInfo pCallback);
+// 做市商
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteSubscribe(void* pMsgQueue,fnOnRspQuoteSubscribe pCallback);
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteSubscribe(void* pMsgQueue,fnOnRtnQuoteSubscribe pCallback);
 
 //释放消息队列
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_ReleaseMsgQueue(void* pMsgQueue);
@@ -169,6 +175,9 @@ QUANTBOXC2XSPEED_API void __stdcall TD_ReqQrySpecifyInstrument(void* pTraderApi,
 
 QUANTBOXC2XSPEED_API void __stdcall TD_ReqQryMatchInfo(void* pTraderApi,DFITCInstrumentTypeType instrumentType);
 QUANTBOXC2XSPEED_API void __stdcall TD_ReqQryOrderInfo(void* pTraderApi,DFITCInstrumentTypeType instrumentType);
+
+// 做市商
+QUANTBOXC2XSPEED_API void __stdcall TD_ReqQuoteSubscribe(void* pTraderApi);
 
 void WriteLog(const char *fmt, ...);
 #ifdef __cplusplus

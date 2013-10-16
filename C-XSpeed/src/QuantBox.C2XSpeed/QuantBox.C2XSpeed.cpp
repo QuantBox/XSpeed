@@ -435,6 +435,14 @@ QUANTBOXC2XSPEED_API void __stdcall TD_ReqQryOrderInfo(void* pTraderApi,DFITCIns
 	}
 }
 
+QUANTBOXC2XSPEED_API void __stdcall TD_ReqQuoteSubscribe(void* pTraderApi)
+{
+	if(pTraderApi)
+	{
+		TD_GetApi(pTraderApi)->ReqQuoteSubscribe();
+	}
+}
+
 void WriteLog( const char *fmt, ...)
 {
     char buff[1024];

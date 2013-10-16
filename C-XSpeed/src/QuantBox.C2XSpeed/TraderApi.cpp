@@ -158,6 +158,9 @@ CTraderApi::SRequest* CTraderApi::MakeRequestBuf(RequestType type)
 	case E_UserLoginField:
 		pRequest->pBuf = new DFITCUserLoginField();
 		break;
+	case E_QuoteSubscribeField:
+		pRequest->pBuf = new DFITCQuoteSubscribeField();
+		break;
 	default:
 		_ASSERT(FALSE);
 		break;
@@ -327,6 +330,13 @@ void CTraderApi::RunInThread()
 				DFITCUserLoginField* body = (DFITCUserLoginField*)pRequest->pBuf;
 				body->lRequestID = lRequest;
 				iRet = m_pApi->ReqUserLogin(body);
+			}
+			break;
+		case E_QuoteSubscribeField:
+			{
+				DFITCQuoteSubscribeField * body = (DFITCQuoteSubscribeField*)pRequest->pBuf;
+				//body->lRequestID = lRequest;
+				iRet = m_pApi->ReqQuoteSubscribe(body);
 			}
 			break;
 		default:
@@ -819,6 +829,34 @@ void CTraderApi::OnRspQryMatchInfo(struct DFITCMatchedRtnField * pRtnMatchData, 
 		ReleaseRequestMapBuf(pErrorInfo->requestID);
 }
 
+void CTraderApi::ReqQuoteSubscribe()
+{
+	if (NULL == m_pApi)
+		return;
+	WriteLog("ReqQuoteSubscribe");
+	SRequest* pRequest = MakeRequestBuf(E_QuoteSubscribeField);
+	if (NULL == pRequest)
+		return;
+	
+	DFITCQuoteSubscribeField * body = (DFITCQuoteSubscribeField*)pRequest->pBuf;
+	
+	strncpy(body->accountID,m_szAccountID.c_str(),sizeof(DFITCAccountIDType));
+	
+	AddToSendQueue(pRequest);
+}
+
+void CTraderApi::OnRspQuoteSubscribe(struct DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData)
+{
+	if(m_msgQueue)
+		m_msgQueue->Input_OnRspQuoteSubscribe(this,pRspQuoteSubscribeData);
+}
+
+void CTraderApi::OnRtnQuoteSubscribe(struct DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData)
+{
+	if(m_msgQueue)
+		m_msgQueue->Input_OnRtnQuoteSubscribe(this,pRtnQuoteSubscribeData);
+}
+
 void CTraderApi::OnRtnInstrumentStatus(DFITCInstrumentStatusField *pInstrumentStatus)
 {
 	if(m_msgQueue)
@@ -827,10 +865,7 @@ void CTraderApi::OnRtnInstrumentStatus(DFITCInstrumentStatusField *pInstrumentSt
 
 void CTraderApi::OnRspUserLogout(struct DFITCUserLogoutInfoRtnField * pUserLogoutInfoRtn, struct DFITCErrorRtnField * pErrorInfo)
 {
-
 }
-
-
 void CTraderApi::OnRspResetPassword(struct DFITCResetPwdRspField * pResetPassword, struct DFITCErrorRtnField * pErrorInfo)
 {}
 void CTraderApi::OnRspQryTradeCode(struct DFITCQryTradeCodeRtnField * pTradeCode, struct DFITCErrorRtnField * pErrorInfo, bool bIsLast)

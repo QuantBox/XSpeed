@@ -26,6 +26,8 @@ class CXSpeedMsgQueue
 		E_fnOnRtnInstrumentStatus,
 		E_fnOnRtnMatchedInfo,
 		E_fnOnRtnOrder,
+		E_fnOnRspQuoteSubscribe,
+		E_fnOnRtnQuoteSubscribe,
 	};
 
 	struct SMsgItem
@@ -62,6 +64,8 @@ public:
 		m_fnOnRtnInstrumentStatus = NULL;
 		m_fnOnRtnMatchedInfo = NULL;
 		m_fnOnRtnOrder = NULL;
+		m_fnOnRspQuoteSubscribe = NULL;
+		m_fnOnRtnQuoteSubscribe = NULL;
 		
 		m_hEvent = CreateEvent(NULL,FALSE,FALSE,NULL);
 	}
@@ -103,6 +107,8 @@ public:
 	void RegisterCallback(fnOnRtnInstrumentStatus pCallback){m_fnOnRtnInstrumentStatus = pCallback;}
 	void RegisterCallback(fnOnRtnMatchedInfo pCallback){m_fnOnRtnMatchedInfo = pCallback;}
 	void RegisterCallback(fnOnRtnOrder pCallback){m_fnOnRtnOrder = pCallback;}
+	void RegisterCallback(fnOnRspQuoteSubscribe pCallback){m_fnOnRspQuoteSubscribe = pCallback;}
+	void RegisterCallback(fnOnRtnQuoteSubscribe pCallback){m_fnOnRtnQuoteSubscribe = pCallback;}
 
 
 	//响应结果处理后入队列(按字母排序)
@@ -124,6 +130,9 @@ public:
 	void Input_OnRtnInstrumentStatus(void* pTraderApi,DFITCInstrumentStatusField *pInstrumentStatus);
 	void Input_OnRtnOrder(void* pTraderApi,DFITCOrderRtnField * pRtnOrderData);
 	void Input_OnRtnMatchedInfo(void* pTraderApi,DFITCMatchRtnField * pRtnMatchData);
+	void Input_OnRspQuoteSubscribe(void* pTraderApi,DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData);
+	void Input_OnRtnQuoteSubscribe(void* pTraderApi,DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData);
+
 private:
 	friend DWORD WINAPI ProcessThread(LPVOID lpParam);
 	void RunInThread();
@@ -226,6 +235,16 @@ private:
 		if(m_fnOnRtnMatchedInfo)
 			(*m_fnOnRtnMatchedInfo)(pItem->pApi,(DFITCMatchRtnField*)pItem->pBuf);
 	}
+	void Output_OnRspQuoteSubscribe(SMsgItem* pItem)
+	{
+		if(m_fnOnRspQuoteSubscribe)
+			(*m_fnOnRspQuoteSubscribe)(pItem->pApi,(DFITCQuoteSubscribeRspField*)pItem->pBuf);
+	}
+	void Output_OnRtnQuoteSubscribe(SMsgItem* pItem)
+	{
+		if(m_fnOnRtnQuoteSubscribe)
+			(*m_fnOnRtnQuoteSubscribe)(pItem->pApi,(DFITCQuoteSubscribeRtnField*)pItem->pBuf);
+	}
 
 private:
 	volatile bool				m_bRunning;
@@ -254,5 +273,8 @@ private:
 	fnOnRtnInstrumentStatus			m_fnOnRtnInstrumentStatus;
 	fnOnRtnMatchedInfo				m_fnOnRtnMatchedInfo;	
 	fnOnRtnOrder					m_fnOnRtnOrder;
+
+	fnOnRspQuoteSubscribe			m_fnOnRspQuoteSubscribe;
+	fnOnRtnQuoteSubscribe			m_fnOnRtnQuoteSubscribe;
 };
 

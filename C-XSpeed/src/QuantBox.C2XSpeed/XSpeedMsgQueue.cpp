@@ -162,6 +162,12 @@ void CXSpeedMsgQueue::_Output_TD(SMsgItem* pMsgItem)
 	case E_fnOnRtnMatchedInfo:
 		Output_OnRtnMatchedInfo(pMsgItem);
 		break;
+	case E_fnOnRspQuoteSubscribe:
+		Output_OnRspQuoteSubscribe(pMsgItem);
+		break;
+	case E_fnOnRtnQuoteSubscribe:
+		Output_OnRtnQuoteSubscribe(pMsgItem);
+		break;
 	default:
 		_ASSERT(false);
 		break;
@@ -785,3 +791,47 @@ void CXSpeedMsgQueue::Input_OnRspCustomerCapital(void* pTraderApi,DFITCCapitalIn
 //		_Input_TD(pItem);
 //	}
 //}
+
+void CXSpeedMsgQueue::Input_OnRspQuoteSubscribe(void* pTraderApi,DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData)
+{
+	if(NULL == pRspQuoteSubscribeData)
+		return;
+
+	SMsgItem* pItem = new SMsgItem;
+	if(pItem)
+	{
+		memset(pItem,0,sizeof(SMsgItem));
+		pItem->type = E_fnOnRspQuoteSubscribe;
+		pItem->pApi = pTraderApi;
+		
+		{
+			int size = sizeof(DFITCQuoteSubscribeRspField);
+			pItem->pBuf = new char[size];
+			memcpy(pItem->pBuf,pRspQuoteSubscribeData,size);
+		}
+
+		_Input_TD(pItem);
+	}
+}
+
+void CXSpeedMsgQueue::Input_OnRtnQuoteSubscribe(void* pTraderApi,DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData)
+{
+	if(NULL == pRtnQuoteSubscribeData)
+		return;
+
+	SMsgItem* pItem = new SMsgItem;
+	if(pItem)
+	{
+		memset(pItem,0,sizeof(SMsgItem));
+		pItem->type = E_fnOnRtnQuoteSubscribe;
+		pItem->pApi = pTraderApi;
+		
+		{
+			int size = sizeof(DFITCQuoteSubscribeRtnField);
+			pItem->pBuf = new char[size];
+			memcpy(pItem->pBuf,pRtnQuoteSubscribeData,size);
+		}
+
+		_Input_TD(pItem);
+	}
+}

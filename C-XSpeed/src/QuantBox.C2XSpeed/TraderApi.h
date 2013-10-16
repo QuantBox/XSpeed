@@ -31,6 +31,7 @@ class CTraderApi :
 		E_PositionDetailField,
 		E_SpecificInstrumentField,
 		E_UserLoginField,
+		E_QuoteSubscribeField,
 	};
 
 	//请求数据包结构体
@@ -77,6 +78,7 @@ public:
 	void ReqQryExchangeInstrument(const string& szExchangeId,DFITCInstrumentTypeType instrumentType);
 	void ReqQryArbitrageInstrument(const string& szExchangeId);
 	void ReqQrySpecifyInstrument(const string& szInstrumentId,const string& szExchangeId,DFITCInstrumentTypeType instrumentType);
+	void ReqQuoteSubscribe();
 
 private:
 	//数据包发送线程
@@ -149,6 +151,10 @@ private:
     virtual void OnRspQryBill(struct DFITCQryBillRtnField *pQryBill, struct DFITCErrorRtnField * pErrorInfo, bool bIsLast);
     virtual void OnRspConfirmProductInfo(struct DFITCProductRtnField * pProductRtnData);
     virtual void OnRspTradingDay(struct DFITCTradingDayRtnField * pTradingDayRtnData);
+
+	// 做市商
+	virtual void OnRspQuoteSubscribe(struct DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData);
+	virtual void OnRtnQuoteSubscribe(struct DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData);
 
 private:
 	ConnectionStatus			m_status;				//连接状态

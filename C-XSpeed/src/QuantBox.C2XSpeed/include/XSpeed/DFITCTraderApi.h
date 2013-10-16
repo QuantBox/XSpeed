@@ -210,6 +210,36 @@ namespace DFITCXSPEEDAPI
           */
          virtual void OnRspTradingDay(struct DFITCTradingDayRtnField * pTradingDayRtnData){};
 
+		 /**
+          * 报单通知订阅响应。
+          */
+		 virtual void OnRspQuoteSubscribe(struct DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData){};
+
+		 /**
+          * 报单通知订阅回报。
+          */
+		 virtual void OnRtnQuoteSubscribe(struct DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData){};
+		 
+		 /**
+          * 做市商报单响应
+          */
+		 virtual void OnRspQuoteInsertOrder(struct DFITCQuoteOrderRspField * pRspQuoteOrderData, struct DFITCErrorRtnField * pErrorInfo) {};
+
+		 /**
+          * 做市商报单回报
+          */
+		 virtual void OnRtnQuoteOrder(struct DFITCQuoteOrderRtnField * pRtnQuoteOrderData){};
+
+		 /**
+          * 做市商撤单响应
+          */
+		 virtual void OnRspCancelQuote( struct DFITCQuoteOrderRspField * pRspQuoteCanceled,struct DFITCErrorRtnField * pErrorInfo)  {};
+
+		/**
+          * 做市商撤单回报
+          */
+		 virtual void OnRtnCancelQuote(struct DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData) {};   
+
      };//end of DFITCTraderSpi
 
      class DFITCTRADERAPI_API DFITCTraderApi
@@ -377,6 +407,24 @@ namespace DFITCXSPEEDAPI
           * @return 0 - 发送查询请求成功; -1 - 发送查询请求失败。
           */
          virtual int ReqTradingDay(struct DFITCTradingDayField * pTradingDay) = 0;
+
+         /**
+          * 报价通知订阅请求
+          * @return 0 - 发送订阅请求成功; -1 - 发送订阅请求失败。
+          */
+         virtual int ReqQuoteSubscribe(struct DFITCQuoteSubscribeField * pQuoteSubscribeData) = 0;
+
+        /**
+         * 做市商报单请求
+         * @return 0 - 发送报单请求成功; -1 - 发送报单请求失败
+         */
+        virtual int ReqInsertOrder(struct DFITCQuoteInsertOrderField * pQuoteInsertOrderData)  = 0;
+
+        /**
+         * 做市商撤单请求
+         * @return 0 - 发送撤单请求成功; -1 - 发送撤单请求失败
+         */
+        virtual int ReqCancelQuote(struct DFITCCancelOrderField * pCancelQuoteData) = 0;  
 
      };//end of DFITCTraderSpi
 }
