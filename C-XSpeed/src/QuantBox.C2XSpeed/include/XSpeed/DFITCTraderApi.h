@@ -233,12 +233,12 @@ namespace DFITCXSPEEDAPI
 		 /**
           * 做市商撤单响应
           */
-		 virtual void OnRspCancelQuote( struct DFITCQuoteOrderRspField * pRspQuoteCanceled,struct DFITCErrorRtnField * pErrorInfo)  {};
+		 virtual void OnRspQuoteCancelOrder( struct DFITCQuoteOrderRspField * pRspQuoteCanceledData,struct DFITCErrorRtnField * pErrorInfo)  {};
 
-		/**
+	 	 /**
           * 做市商撤单回报
           */
-		 virtual void OnRtnCancelQuote(struct DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData) {};   
+		 virtual void OnRtnQuoteCancelOrder(struct DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData) {};   
 
      };//end of DFITCTraderSpi
 
@@ -418,13 +418,13 @@ namespace DFITCXSPEEDAPI
          * 做市商报单请求
          * @return 0 - 发送报单请求成功; -1 - 发送报单请求失败
          */
-        virtual int ReqInsertOrder(struct DFITCQuoteInsertOrderField * pQuoteInsertOrderData)  = 0;
+        virtual int ReqQuoteInsertOrder(struct DFITCQuoteInsertOrderField * pQuoteInsertOrderData)  = 0;
 
         /**
          * 做市商撤单请求
          * @return 0 - 发送撤单请求成功; -1 - 发送撤单请求失败
          */
-        virtual int ReqCancelQuote(struct DFITCCancelOrderField * pCancelQuoteData) = 0;  
+        virtual int ReqQuoteCancelOrder(struct DFITCCancelOrderField * pQuoteCancelOrderData) = 0;  
 
      };//end of DFITCTraderSpi
 }
