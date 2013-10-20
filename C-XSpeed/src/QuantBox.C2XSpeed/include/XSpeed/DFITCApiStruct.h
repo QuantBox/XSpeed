@@ -743,12 +743,16 @@ struct APISTRUCT DFITCTradingDayRtnField
 struct APISTRUCT DFITCQuoteSubscribeField
 {
     DFITCAccountIDType                  accountID;                    //资金账号
+
+    DFITCQuoteSubscribeField();
 };
 
 ///报价通知订阅响应
 struct APISTRUCT DFITCQuoteSubscribeRspField
 {
-    DFITCSubscribeFlagType              subscribeFlag;                //订阅状态（0成功，1失败）
+    DFITCSubscribeFlagType              subscribeFlag;                //订阅状态
+
+    DFITCQuoteSubscribeRspField();
 };
 
 ///报价通知订阅回报
@@ -757,9 +761,15 @@ struct APISTRUCT DFITCQuoteSubscribeRtnField
     DFITCQuoteIDType                    quoteID;                      //询价编号
     DFITCExchangeIDType                 exchangeID;                   //交易所
     DFITCInstrumentIDType               instrumentID;                 //合约代码
-    DFITCInstrumentTypeType             instrumentType;               //合约类型
-    DFITCBuySellTypeType                buySellType;                  //买卖标志（0买，1卖，2所有）  
-    DFITCSourceType                     source;                       //来源    （0会员，1交易所）
+    DFITCBuySellTypeType                buySellType;                  //买卖标志
+    DFITCSourceType                     source;                       //来源
+    DFITCClientIDType                   clientID;                     //交易编码
+	DFITCSeatCodeType                   seatCode;                     //席位代码
+	DFITCDateType						tradingDate;				  //交易日期
+	DFITCDateType						quoteTime;					  //询价时间
+	DFITCDateType						quoteRecvTime;				  //询价接收时间
+
+    DFITCQuoteSubscribeRtnField();
 };
 
 //做市商报单请求
@@ -771,16 +781,19 @@ struct APISTRUCT DFITCQuoteInsertOrderField
     DFITCInsertType                     insertType;                   //委托类别
     DFITCInstrumentIDType               instrumentID;                 //合约代码
     DFITCQuoteIDType                    quoteID;                      //询价编号
-    DFITCInstrumentTypeType             instrumentType;               //合约类型 0期货1期权
+    DFITCInstrumentTypeType             instrumentType;               //合约类型 
     DFITCAmountType                     bOrderAmount;                 //报单数量（买）
     DFITCAmountType                     sOrderAmount;                 //报单数量（卖）
     DFITCPriceType                      bInsertPrice;                 //委托价格（买）         
     DFITCPriceType                      sInsertPrice;                 //委托价格（卖）          
-    DFITCOpenCloseTypeType              bOpenCloseType;               //开平标志（买）1开2平      
-    DFITCOpenCloseTypeType              sOpenCloseType;               //开平标志（卖）1开2平  
-    DFITCSpeculatorType                 bSpeculator;                  //投资类别（买）0投机1套保      	  
-    DFITCSpeculatorType                 sSpeculator;                  //投资类别（卖）0投机1套保             
-    DFITCDateType                       stayTime;                     //停留时间，仅支持郑州。其它情况可设置为0 
+    DFITCOpenCloseTypeType              bOpenCloseType;               //开平标志（买）  
+    DFITCOpenCloseTypeType              sOpenCloseType;               //开平标志（卖）
+    DFITCSpeculatorType                 bSpeculator;                  //投资类别（买） 	  
+    DFITCSpeculatorType                 sSpeculator;                  //投资类别（卖）          
+    DFITCStayTimeType                   stayTime;                     //停留时间，仅支持郑州。其它情况可设置为0 
+	DFITCBuySellTypeType                buySellType;                  //买卖标志
+
+    DFITCQuoteInsertOrderField();
 };
 
 //做市商报单响应
@@ -791,14 +804,17 @@ struct APISTRUCT DFITCQuoteOrderRspField
     DFITCRequestIDType                  lRequestID;                   //请求ID                    
     DFITCPriceType                      poundage;                     //双边手续费之和            
     DFITCPriceType                      margin;                       //双边保证金之和
-    DFITCDateType                       orderTime;                    //委托时间                  
+    DFITCDateType                       orderTime;                    //委托时间      
+	
+    DFITCQuoteOrderRspField();
 };
 
 //做市商报单回报
 struct APISTRUCT DFITCQuoteOrderRtnField
 {
     DFITCExchangeIDType                 exchangeID;                    //交易所                   
-    DFITCClientIDType                   clientID;                      //交易编码                    
+    DFITCClientIDType                   clientID;                      //交易编码  
+	DFITCOrderSysIDType                 orderSysID;                    //报单编号
     DFITCInstrumentIDType               instrumentID;                  //合约代码                   
     DFITCLocalOrderIDType               localOrderID;                  //本地委托号                
     DFITCSeatCodeType                   seatCode;                      //席位代码                  
@@ -810,17 +826,26 @@ struct APISTRUCT DFITCQuoteOrderRtnField
     DFITCAmountType                     sOrderAmount;                  //委托数量（卖）           
     DFITCPriceType                      bInsertPrice;                  //委托价  （买）               
     DFITCPriceType                      sInsertPrice;                  //委托价  （卖）               
-    DFITCSPDOrderIDType                 spdOrderID;                    //柜台委托号                
-    DFITCOrderAnswerStatusType          orderStatus;                   //委托状态               
+    DFITCSPDOrderIDType                 spdOrderID;                    //柜台委托号                               
     DFITCAccountIDType                  accountID;                     //资金账号                     
     DFITCInstrumentTypeType             instrumentType;                //合约类型                  
     DFITCDateType                       suspendTime;                   //挂单时间                  
     DFITCCloseIDType                    closeID;                       //平仓执行单号               
-    DFITCEntrusTellerType               entrusTeller;                  //委托柜员                 
-    DFITCAmountType                     bCanelAmount;                  //撤单数量（买）               
-    DFITCAmountType                     sCanelAmount;                  //撤单数量（卖）                
+    DFITCEntrusTellerType               entrusTeller;                  //委托柜员   	
+    DFITCOrderAnswerStatusType          orderStatus;                   //委托状态 
+    DFITCOrderSysIDType                 bOrderSysID;                   //买方主场单号
+    DFITCOrderSysIDType                 sOrderSysID;                   //卖方主场单号
+
+	///以下字段仅在 orderStatus为2的时候返回
+
+    DFITCAmountType                     bCancelAmount;                  //撤单数量（买）               
+    DFITCAmountType                     sCancelAmount;                  //撤单数量（卖）                
+
     DFITCPriceType                      poundage;                      //解冻手续费                  
-    DFITCPriceType                      margin;                        //解冻保证金               
+    DFITCPriceType                      margin;                        //解冻保证金 
+	DFITCErrorMsgInfoType               errorMsg;                      //错误信息
+	
+    DFITCQuoteOrderRtnField();
 };
 
 //做市场撤单回报
@@ -837,7 +862,7 @@ struct APISTRUCT DFITCQuoteCanceledRtnField
     DFITCOpenCloseTypeType              bOpenCloseType;                //开平标志（买）
     DFITCOpenCloseTypeType              sOpenCloseType;                //开平标志（卖）
     DFITCSpeculatorType                 bSpeculator;                   //投保类型（买）
-    DFITCSpeculatorType                 sSspeculator;                  //投保类型（卖）
+    DFITCSpeculatorType                 sSpeculator;                   //投保类型（卖）
     DFITCSPDOrderIDType                 spdOrderID;                    //柜台委托号
     DFITCExchangeIDType                 exchangeID;                    //交易所ID
     DFITCDateType                       canceledTime;                  //撤单时间
@@ -846,6 +871,8 @@ struct APISTRUCT DFITCQuoteCanceledRtnField
     DFITCAccountIDType                  accountID;                     //资金账号
     DFITCPriceType                      margin;                        //解冻保证金
     DFITCPriceType                      poundate;                      //解冻手续费
+
+    DFITCQuoteCanceledRtnField();
 };
 
 

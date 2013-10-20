@@ -26,8 +26,13 @@ class CXSpeedMsgQueue
 		E_fnOnRtnInstrumentStatus,
 		E_fnOnRtnMatchedInfo,
 		E_fnOnRtnOrder,
+
 		E_fnOnRspQuoteSubscribe,
 		E_fnOnRtnQuoteSubscribe,
+		E_fnOnRspQuoteInsertOrder,
+		E_fnOnRspQuoteCancelOrder,
+		E_fnOnRtnQuoteCancelOrder,
+		E_fnOnRtnQuoteOrder,
 	};
 
 	struct SMsgItem
@@ -64,8 +69,13 @@ public:
 		m_fnOnRtnInstrumentStatus = NULL;
 		m_fnOnRtnMatchedInfo = NULL;
 		m_fnOnRtnOrder = NULL;
+
 		m_fnOnRspQuoteSubscribe = NULL;
 		m_fnOnRtnQuoteSubscribe = NULL;
+		m_fnOnRspQuoteInsertOrder = NULL;
+		m_fnOnRspQuoteCancelOrder = NULL;
+		m_fnOnRtnQuoteCancelOrder = NULL;
+		m_fnOnRtnQuoteOrder = NULL;
 		
 		m_hEvent = CreateEvent(NULL,FALSE,FALSE,NULL);
 	}
@@ -109,6 +119,10 @@ public:
 	void RegisterCallback(fnOnRtnOrder pCallback){m_fnOnRtnOrder = pCallback;}
 	void RegisterCallback(fnOnRspQuoteSubscribe pCallback){m_fnOnRspQuoteSubscribe = pCallback;}
 	void RegisterCallback(fnOnRtnQuoteSubscribe pCallback){m_fnOnRtnQuoteSubscribe = pCallback;}
+	void RegisterCallback_OnRspQuoteInsertOrder(fnOnRspQuoteInsertCancelOrder pCallback){m_fnOnRspQuoteInsertOrder = pCallback;}
+	void RegisterCallback_OnRspQuoteCancelOrder(fnOnRspQuoteInsertCancelOrder pCallback){m_fnOnRspQuoteCancelOrder = pCallback;}
+	void RegisterCallback(fnOnRtnQuoteCancelOrder pCallback){m_fnOnRtnQuoteCancelOrder = pCallback;}
+	void RegisterCallback(fnOnRtnQuoteOrder pCallback){m_fnOnRtnQuoteOrder = pCallback;}
 
 
 	//响应结果处理后入队列(按字母排序)
@@ -130,9 +144,13 @@ public:
 	void Input_OnRtnInstrumentStatus(void* pTraderApi,DFITCInstrumentStatusField *pInstrumentStatus);
 	void Input_OnRtnOrder(void* pTraderApi,DFITCOrderRtnField * pRtnOrderData);
 	void Input_OnRtnMatchedInfo(void* pTraderApi,DFITCMatchRtnField * pRtnMatchData);
+
 	void Input_OnRspQuoteSubscribe(void* pTraderApi,DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData);
 	void Input_OnRtnQuoteSubscribe(void* pTraderApi,DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData);
-
+	void Input_OnRspQuoteInsertOrder(void* pTraderApi,DFITCQuoteOrderRspField * pRspQuoteOrderData,DFITCErrorRtnField * pErrorInfo);
+	void Input_OnRspQuoteCancelOrder(void* pTraderApi,DFITCQuoteOrderRspField * pRspQuoteOrderData,DFITCErrorRtnField * pErrorInfo);
+	void Input_OnRtnQuoteOrder(void* pTraderApi,DFITCQuoteOrderRtnField * pRtnQuoteOrderData);
+	void Input_OnRtnQuoteCancelOrder(void* pTraderApi,DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData);
 private:
 	friend DWORD WINAPI ProcessThread(LPVOID lpParam);
 	void RunInThread();
@@ -235,6 +253,7 @@ private:
 		if(m_fnOnRtnMatchedInfo)
 			(*m_fnOnRtnMatchedInfo)(pItem->pApi,(DFITCMatchRtnField*)pItem->pBuf);
 	}
+
 	void Output_OnRspQuoteSubscribe(SMsgItem* pItem)
 	{
 		if(m_fnOnRspQuoteSubscribe)
@@ -244,6 +263,26 @@ private:
 	{
 		if(m_fnOnRtnQuoteSubscribe)
 			(*m_fnOnRtnQuoteSubscribe)(pItem->pApi,(DFITCQuoteSubscribeRtnField*)pItem->pBuf);
+	}
+	void Output_OnRspQuoteInsertOrder(SMsgItem* pItem)
+	{
+		if(m_fnOnRspQuoteInsertOrder)
+			(*m_fnOnRspQuoteInsertOrder)(pItem->pApi,(DFITCQuoteOrderRspField*)pItem->pBuf,&pItem->RspInfo);
+	}
+	void Output_OnRspQuoteCancelOrder(SMsgItem* pItem)
+	{
+		if(m_fnOnRspQuoteCancelOrder)
+			(*m_fnOnRspQuoteCancelOrder)(pItem->pApi,(DFITCQuoteOrderRspField*)pItem->pBuf,&pItem->RspInfo);
+	}
+	void Output_OnRtnQuoteOrder(SMsgItem* pItem)
+	{
+		if(m_fnOnRtnQuoteOrder)
+			(*m_fnOnRtnQuoteOrder)(pItem->pApi,(DFITCQuoteOrderRtnField*)pItem->pBuf);
+	}
+	void Output_OnRtnQuoteCancelOrder(SMsgItem* pItem)
+	{
+		if(m_fnOnRtnQuoteCancelOrder)
+			(*m_fnOnRtnQuoteCancelOrder)(pItem->pApi,(DFITCQuoteCanceledRtnField*)pItem->pBuf);
 	}
 
 private:
@@ -276,5 +315,9 @@ private:
 
 	fnOnRspQuoteSubscribe			m_fnOnRspQuoteSubscribe;
 	fnOnRtnQuoteSubscribe			m_fnOnRtnQuoteSubscribe;
+	fnOnRspQuoteInsertCancelOrder	m_fnOnRspQuoteInsertOrder;
+	fnOnRspQuoteInsertCancelOrder	m_fnOnRspQuoteCancelOrder;
+	fnOnRtnQuoteCancelOrder			m_fnOnRtnQuoteCancelOrder;
+	fnOnRtnQuoteOrder				m_fnOnRtnQuoteOrder;
 };
 

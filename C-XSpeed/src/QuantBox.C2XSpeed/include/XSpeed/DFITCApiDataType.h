@@ -107,8 +107,8 @@ typedef short DFITCBuySellTypeType;
 
 //(以下为做市商操作特有字段)
 
-///所有
-#define DFITC_SPD_ALL                   3
+///双边
+#define DFITC_SPD_ALL                   0
 
 
 //////////////////////////////////////////////
@@ -123,6 +123,8 @@ typedef int DFITCOpenCloseTypeType;
 #define DFITC_SPD_CLOSETODAY            4
 ///期权执行
 #define DFITC_SPD_EXECUTE               6
+
+//(做市商请求，仅支持“开仓”“平仓”)
 
 
 ////////////////////////////////////////////////////////////
@@ -229,6 +231,11 @@ typedef char DFITCMatchIDType[32];
 ////////////////////////////////////////////////////////////
 typedef char DFITCDateType[13];
 
+////////////////////////////////////////////////////////////
+///DFITCDateType：停留时间数据类型
+////////////////////////////////////////////////////////////
+typedef int DFITCStayTimeType;
+
 
 ////////////////////////////////////////////////////////////
 ///DFITCMatchType:成交类型数据类型
@@ -249,6 +256,7 @@ typedef int DFITCSpeculatorType;
 ///套利
 #define DFITC_SPD_ARBITRAGE             2
 
+//（做市商请求，仅支持“投机”“套保”）
 
 ////////////////////////////////////////////////////////////
 ///DFITCFeeType:手续费数据类型
@@ -666,6 +674,10 @@ typedef char DFITCAdjustmentInfoType[64];
 ///DFITCSubscribeFlagType:订阅状态
 ////////////////////////////////////////////////////////////
 typedef short DFITCSubscribeFlagType; 
+///订阅成功
+#define DFITC_QUOTE_SUB_SUCCESS
+///订阅失败
+#define DFITC_QUOTE_SUB_FAILED
 
 ////////////////////////////////////////////////////////////
 ///DFITCQuoteIDType:询价编号

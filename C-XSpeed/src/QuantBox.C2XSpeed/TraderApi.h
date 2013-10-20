@@ -32,6 +32,8 @@ class CTraderApi :
 		E_SpecificInstrumentField,
 		E_UserLoginField,
 		E_QuoteSubscribeField,
+		E_QuoteInsertOrderField,
+		E_QuoteCancelOrderField,
 	};
 
 	//请求数据包结构体
@@ -66,6 +68,26 @@ public:
 		DFITCOrderPropertyType orderProperty,
 		DFITCInstrumentTypeType nInstrumentType);
 	void ReqCancelOrder(
+		const string& szInstrumentId,
+		DFITCLocalOrderIDType localOrderID,
+		DFITCSPDOrderIDType spdOrderID);
+
+	long ReqQuoteInsertOrder(
+			long localOrderID,
+			const string& szInstrumentId,
+			const string& quoteID,
+			DFITCAmountType bOrderAmount,
+			DFITCAmountType sOrderAmount,
+			DFITCPriceType bInsertPrice,
+			DFITCPriceType sInsertPrice,
+			DFITCOpenCloseTypeType bOpenCloseType,
+			DFITCOpenCloseTypeType sOpenCloseType,
+			DFITCSpeculatorType bSpeculator,
+			DFITCSpeculatorType sSpeculator,
+			DFITCStayTimeType stayTime,
+			DFITCInstrumentTypeType nInstrumentType,
+			DFITCBuySellTypeType buySellType);
+	void ReqQuoteCancelOrder(
 		const string& szInstrumentId,
 		DFITCLocalOrderIDType localOrderID,
 		DFITCSPDOrderIDType spdOrderID);
@@ -155,6 +177,10 @@ private:
 	// 做市商
 	virtual void OnRspQuoteSubscribe(struct DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData);
 	virtual void OnRtnQuoteSubscribe(struct DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData);
+	virtual void OnRspQuoteInsertOrder(struct DFITCQuoteOrderRspField * pRspQuoteOrderData, struct DFITCErrorRtnField * pErrorInfo);
+	virtual void OnRtnQuoteOrder(struct DFITCQuoteOrderRtnField * pRtnQuoteOrderData);
+	virtual void OnRspQuoteCancelOrder( struct DFITCQuoteOrderRspField * pRspQuoteCanceledData,struct DFITCErrorRtnField * pErrorInfo);
+	virtual void OnRtnQuoteCancelOrder(struct DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData);   
 
 private:
 	ConnectionStatus			m_status;				//连接状态

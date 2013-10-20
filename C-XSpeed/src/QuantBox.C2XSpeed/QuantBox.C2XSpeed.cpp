@@ -182,6 +182,54 @@ QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnMatchedInfo(void* pMsgQueue,f
 	}
 }
 
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteSubscribe(void* pMsgQueue,fnOnRspQuoteSubscribe pCallback)
+{
+	if(pMsgQueue)
+	{
+		XSpeed_GetQueue(pMsgQueue)->RegisterCallback(pCallback);
+	}
+}
+
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteSubscribe(void* pMsgQueue,fnOnRtnQuoteSubscribe pCallback)
+{
+	if(pMsgQueue)
+	{
+		XSpeed_GetQueue(pMsgQueue)->RegisterCallback(pCallback);
+	}
+}
+
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteInsertOrder(void* pMsgQueue,fnOnRspQuoteInsertCancelOrder pCallback)
+{
+	if(pMsgQueue)
+	{
+		XSpeed_GetQueue(pMsgQueue)->RegisterCallback_OnRspQuoteInsertOrder(pCallback);
+	}
+}
+
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteCancelOrder(void* pMsgQueue,fnOnRspQuoteInsertCancelOrder pCallback)
+{
+	if(pMsgQueue)
+	{
+		XSpeed_GetQueue(pMsgQueue)->RegisterCallback_OnRspQuoteCancelOrder(pCallback);
+	}
+}
+
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteCancelOrder(void* pMsgQueue,fnOnRtnQuoteCancelOrder pCallback)
+{
+	if(pMsgQueue)
+	{
+		XSpeed_GetQueue(pMsgQueue)->RegisterCallback(pCallback);
+	}
+}
+
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteOrder(void* pMsgQueue,fnOnRtnQuoteOrder pCallback)
+{
+	if(pMsgQueue)
+	{
+		XSpeed_GetQueue(pMsgQueue)->RegisterCallback(pCallback);
+	}
+}
+
 QUANTBOXC2XSPEED_API bool __stdcall XSpeed_ProcessMsgQueue(void* pMsgQueue)
 {
 	if(pMsgQueue)
@@ -354,6 +402,62 @@ QUANTBOXC2XSPEED_API void __stdcall TD_CancelOrder(
 			spdOrderID);
 	}
 }
+
+QUANTBOXC2XSPEED_API int __stdcall TD_SendQuoteOrder(
+	void* pTraderApi,
+	long localOrderID,
+	const char* szInstrumentId,
+	const char* quoteID,
+	DFITCAmountType bOrderAmount,
+	DFITCAmountType sOrderAmount,
+	DFITCPriceType bInsertPrice,
+	DFITCPriceType sInsertPrice,
+	DFITCOpenCloseTypeType bOpenCloseType,
+	DFITCOpenCloseTypeType sOpenCloseType,
+	DFITCSpeculatorType bSpeculator,
+	DFITCSpeculatorType sSpeculator,
+	DFITCStayTimeType stayTime,
+	DFITCInstrumentTypeType nInstrumentType,
+	DFITCBuySellTypeType buySellType)
+{
+	if(pTraderApi
+		&&szInstrumentId)
+	{
+		return TD_GetApi(pTraderApi)->ReqQuoteInsertOrder(
+			localOrderID,
+			szInstrumentId,
+			quoteID,
+			bOrderAmount,
+			sOrderAmount,
+			bInsertPrice,
+			sInsertPrice,
+			bOpenCloseType,
+			sOpenCloseType,
+			bSpeculator,
+			sSpeculator,
+			stayTime,
+			nInstrumentType,
+			buySellType);
+	}
+	return 0;
+}
+
+QUANTBOXC2XSPEED_API void __stdcall TD_CancelQuoteOrder(
+	void* pTraderApi,
+	const char* szInstrumentId,
+	DFITCLocalOrderIDType localOrderID,
+	DFITCSPDOrderIDType spdOrderID)
+{
+	if(pTraderApi
+		&&szInstrumentId)
+	{
+		TD_GetApi(pTraderApi)->ReqQuoteCancelOrder(
+			szInstrumentId,
+			localOrderID,
+			spdOrderID);
+	}
+}
+
 
 QUANTBOXC2XSPEED_API void __stdcall TD_Disconnect(void* pTraderApi)
 {
