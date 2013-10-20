@@ -417,8 +417,7 @@ QUANTBOXC2XSPEED_API int __stdcall TD_SendQuoteOrder(
 	DFITCSpeculatorType bSpeculator,
 	DFITCSpeculatorType sSpeculator,
 	DFITCStayTimeType stayTime,
-	DFITCInstrumentTypeType nInstrumentType,
-	DFITCBuySellTypeType buySellType)
+	DFITCInstrumentTypeType nInstrumentType)
 {
 	if(pTraderApi
 		&&szInstrumentId)
@@ -436,8 +435,7 @@ QUANTBOXC2XSPEED_API int __stdcall TD_SendQuoteOrder(
 			bSpeculator,
 			sSpeculator,
 			stayTime,
-			nInstrumentType,
-			buySellType);
+			nInstrumentType);
 	}
 	return 0;
 }

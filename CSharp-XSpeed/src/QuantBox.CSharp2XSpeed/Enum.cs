@@ -24,6 +24,10 @@ namespace QuantBox.CSharp2XSpeed
     public enum DFITCBuySellTypeType:short
     {
         /// <summary>
+        /// 双边，做市商操作特有字段
+        /// </summary>
+        ALL = 0,
+        /// <summary>
         /// 买
         /// </summary>
         BUY = 1,
@@ -31,10 +35,6 @@ namespace QuantBox.CSharp2XSpeed
         /// 买
         /// </summary>
         SELL = 2,
-        /// <summary>
-        /// 所有，做市商操作特有字段
-        /// </summary>
-        ALL = 3,
     }
 
     /// <summary>
@@ -380,6 +380,21 @@ namespace QuantBox.CSharp2XSpeed
         /// 表示指定客户
         /// </summary>
         ACCOUNT_ID_MSG = 2
+    }
+
+    /// <summary>
+    /// DFITCSubscribeFlagType:订阅状态
+    /// </summary>
+    public enum DFITCSubscribeFlagType : short
+    {
+        /// <summary>
+        /// 订阅成功
+        /// </summary>
+        QUOTE_SUB_SUCCESS = 0,
+        /// <summary>
+        /// 订阅失败
+        /// </summary>
+        QUOTE_SUB_FAILED = 1
     }
 
     /// <summary>

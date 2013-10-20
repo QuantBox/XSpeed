@@ -1689,9 +1689,9 @@ namespace QuantBox.CSharp2XSpeed
     public struct DFITCQuoteSubscribeRspField
     {
         /// <summary>
-        /// 订阅状态（0成功，1失败）
+        /// 订阅状态
         /// </summary>
-        public short subscribeFlag;
+        public DFITCSubscribeFlagType subscribeFlag;
     };
 
     /// <summary>
@@ -1729,6 +1729,345 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         [MarshalAs(UnmanagedType.I2)]
         public DFITCSourceType source;
+    };
+
+    /// <summary>
+    /// 做市商报单请求
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DFITCQuoteInsertOrderField
+    {
+        /// <summary>
+        /// 资金账户ID
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string accountID;
+        /// <summary>
+        /// 请求ID
+        /// </summary>
+        public int lRequestID;
+        /// <summary>
+        /// 本地委托号, 由API使用者维护，在同一个会话中不能重复
+        /// </summary>
+        public int localOrderID;
+        /// <summary>
+        /// 委托类别(默认为普通订单)
+        /// </summary>
+        public DFITCInsertType insertType;
+        /// <summary>
+        /// 合约代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string InstrumentID;
+        /// <summary>
+        /// 询价编号
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 33)]
+        public string quoteID;
+        /// <summary>
+        /// 合约类型
+        /// </summary>
+        public DFITCInstrumentTypeType instrumentType;
+        /// <summary>
+        /// 报单数量（买）
+        /// </summary>
+        public int bOrderAmount;
+        /// <summary>
+        /// 报单数量（卖）
+        /// </summary>
+        public int sOrderAmount;
+        /// <summary>
+        /// 委托价格（买）
+        /// </summary>
+        public double bInsertPrice;
+        /// <summary>
+        /// 委托价格（卖）
+        /// </summary>
+        public double sInsertPrice;
+        /// <summary>
+        /// 开平标志（买）
+        /// </summary>
+        public DFITCOpenCloseTypeType bOpenCloseType;
+        /// <summary>
+        /// 开平标志（卖）
+        /// </summary>
+        public DFITCOpenCloseTypeType sOpenCloseType;
+        /// <summary>
+        /// 投资类别（买）
+        /// </summary>
+        public DFITCSpeculatorType bSpeculator;
+        /// <summary>
+        /// 投资类别（卖） 
+        /// </summary>
+        public DFITCSpeculatorType sSpeculator;
+        /// <summary>
+        /// 停留时间，仅支持郑州。其它情况可设置为0
+        /// </summary>
+        public int stayTime;
+        /// <summary>
+        /// 买卖标志
+        /// </summary>
+        [MarshalAs(UnmanagedType.I2)]
+        public DFITCBuySellTypeType buySellType;
+    };
+
+    /// <summary>
+    /// 做市商报单响应
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DFITCQuoteOrderRspField
+    {
+        /// <summary>
+        /// 本地委托号
+        /// </summary>
+        public int localOrderID;
+        /// <summary>
+        /// 柜台委托号
+        /// </summary>
+        public int spdOrderID;
+        /// <summary>
+        /// 请求ID
+        /// </summary>
+        public int lRequestID;
+        /// <summary>
+        /// 双边手续费之和
+        /// </summary>
+        public double poundage;
+        /// <summary>
+        /// 双边保证金之和
+        /// </summary>
+        public double margin;
+        /// <summary>
+        /// 委托时间
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string orderTime;
+    };
+
+
+    /// <summary>
+    /// 做市商报单回报
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DFITCQuoteOrderRtnField
+    {
+        /// <summary>
+        /// 交易所编码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string ExchangeID;
+        /// <summary>
+        /// 交易编码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string clientID;
+        /// <summary>
+        /// 合约代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string InstrumentID;
+        /// <summary>
+        /// 本地委托号
+        /// </summary>
+        public int localOrderID;
+        /// <summary>
+        /// 席位代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 33)]
+        public string seatCode;
+        /// <summary>
+        /// 开平标志（买）
+        /// </summary>
+        public DFITCOpenCloseTypeType bOpenCloseType;
+        /// <summary>
+        /// 开平标志（卖）
+        /// </summary>
+        public DFITCOpenCloseTypeType sOpenCloseType;
+        /// <summary>
+        /// 投资类别（买）
+        /// </summary>
+        public DFITCSpeculatorType bSpeculator;
+        /// <summary>
+        /// 投资类别（卖） 
+        /// </summary>
+        public DFITCSpeculatorType sSpeculator;
+        /// <summary>
+        /// 报单数量（买）
+        /// </summary>
+        public int bOrderAmount;
+        /// <summary>
+        /// 报单数量（卖）
+        /// </summary>
+        public int sOrderAmount;
+        /// <summary>
+        /// 委托价格（买）
+        /// </summary>
+        public double bInsertPrice;
+        /// <summary>
+        /// 委托价格（卖）
+        /// </summary>
+        public double sInsertPrice;
+        /// <summary>
+        /// 柜台委托号
+        /// </summary>
+        public int spdOrderID;
+        /// <summary>
+        /// 资金账户ID
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string accountID;
+        /// <summary>
+        /// 合约类型
+        /// </summary>
+        public DFITCInstrumentTypeType instrumentType;
+        /// <summary>
+        /// 挂起时间
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string SuspendTime;
+        /// <summary>
+        /// 平仓执行单号
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 33)]
+        public string closeID;
+        /// <summary>
+        /// 委托柜员
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 41)]
+        public string entrusTeller;
+        /// <summary>
+        /// 委托状态
+        /// </summary>
+        public DFITCOrderAnswerStatusType orderStatus;
+        /// <summary>
+        /// 买方主场单号
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string bOrderSysID;
+        /// <summary>
+        /// 卖方主场单号
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string sOrderSysID;
+
+        /// 以下字段仅在 orderStatus为2的时候返回
+
+        /// <summary>
+        /// 撤单数量（买） 
+        /// </summary>
+        public int bCancelAmount;
+        /// <summary>
+        /// 撤单数量（卖）
+        /// </summary>
+        public int sCancelAmount;
+        /// <summary>
+        /// 解冻手续费
+        /// </summary>
+        public double poundage;
+        /// <summary>
+        /// 解冻保证金
+        /// </summary>
+        public double margin;
+        /// <summary>
+        /// 错误信息
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1024)]
+        public string errorMsg;
+    };
+
+
+    /// <summary>
+    /// 做市场撤单回报
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DFITCQuoteCanceledRtnField
+    {
+        /// <summary>
+        /// 本地委托号
+        /// </summary>
+        public int localOrderID;
+        /// <summary>
+        /// 报单编号
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string OrderSysID;
+        /// <summary>
+        /// 合约代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string InstrumentID;
+        /// <summary>
+        /// 合约类型
+        /// </summary>
+        public DFITCInstrumentTypeType instrumentType;
+        /// <summary>
+        /// 委托价格（买）
+        /// </summary>
+        public double bInsertPrice;
+        /// <summary>
+        /// 委托价格（卖）
+        /// </summary>
+        public double sInsertPrice;
+        /// <summary>
+        /// 撤单数量（买）
+        /// </summary>
+        public int bAmount;
+        /// <summary>
+        /// 撤单数量（卖）
+        /// </summary>
+        public int sAmount;
+        /// <summary>
+        /// 开平标志（买）
+        /// </summary>
+        public DFITCOpenCloseTypeType bOpenCloseType;
+        /// <summary>
+        /// 开平标志（卖）
+        /// </summary>
+        public DFITCOpenCloseTypeType sOpenCloseType;
+        /// <summary>
+        /// 投保类型（买）
+        /// </summary>
+        public DFITCSpeculatorType bSpeculator;
+        /// <summary>
+        /// 投保类型（卖）
+        /// </summary>
+        public DFITCSpeculatorType sSpeculator;
+        /// <summary>
+        /// 柜台委托号
+        /// </summary>
+        public int spdOrderID;
+        /// <summary>
+        /// 交易所ID
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string ExchangeID;
+        /// <summary>
+        /// 撤单时间
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string canceledTime;
+        /// <summary>
+        /// 会话ID
+        /// </summary>
+        public int sessionID;
+        /// <summary>
+        /// 委托状态
+        /// </summary>
+        [MarshalAs(UnmanagedType.I2)]
+        public DFITCOrderAnswerStatusType orderStatus;
+        /// <summary>
+        /// 资金账户ID
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string accountID;
+        /// <summary>
+        /// 解冻手续费
+        /// </summary>
+        public double poundage;
+        /// <summary>
+        /// 解冻保证金
+        /// </summary>
+        public double margin;
     };
 }
 /*

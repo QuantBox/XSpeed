@@ -85,8 +85,7 @@ public:
 			DFITCSpeculatorType bSpeculator,
 			DFITCSpeculatorType sSpeculator,
 			DFITCStayTimeType stayTime,
-			DFITCInstrumentTypeType nInstrumentType,
-			DFITCBuySellTypeType buySellType);
+			DFITCInstrumentTypeType nInstrumentType);
 	void ReqQuoteCancelOrder(
 		const string& szInstrumentId,
 		DFITCLocalOrderIDType localOrderID,

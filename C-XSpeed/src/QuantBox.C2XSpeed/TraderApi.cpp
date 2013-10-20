@@ -948,8 +948,7 @@ long CTraderApi::ReqQuoteInsertOrder(
 	DFITCSpeculatorType bSpeculator,
 	DFITCSpeculatorType sSpeculator,
 	DFITCStayTimeType stayTime,
-	DFITCInstrumentTypeType nInstrumentType,
-	DFITCBuySellTypeType buySellType
+	DFITCInstrumentTypeType nInstrumentType
 	)
 {
 	if (NULL == m_pApi)
@@ -973,7 +972,7 @@ long CTraderApi::ReqQuoteInsertOrder(
 	body->bOrderAmount = bOrderAmount;
 	body->sOrderAmount = sOrderAmount;
 	// ÂòÂô
-	body->buySellType = buySellType;
+	body->buySellType = DFITC_SPD_ALL;
 	// ¿ªÆ½
 	body->bOpenCloseType = bOpenCloseType;
 	body->sOpenCloseType = sOpenCloseType;

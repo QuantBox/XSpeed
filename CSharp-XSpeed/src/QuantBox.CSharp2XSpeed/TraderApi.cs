@@ -53,6 +53,18 @@ namespace QuantBox.CSharp2XSpeed
         [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnQuoteSubscribe")]
         public static extern void XSpeed_RegOnRtnQuoteSubscribe(IntPtr pMsgQueue, fnOnRtnQuoteSubscribe pCallback);
 
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRspQuoteInsertOrder")]
+        public static extern void XSpeed_RegOnRspQuoteInsertOrder(IntPtr pMsgQueue, fnOnRspQuoteInsertCancelOrder pCallback);
+
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRspQuoteCancelOrder")]
+        public static extern void XSpeed_RegOnRspQuoteCancelOrder(IntPtr pMsgQueue, fnOnRspQuoteInsertCancelOrder pCallback);
+
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnQuoteCancelOrder")]
+        public static extern void XSpeed_RegOnRtnQuoteCancelOrder(IntPtr pMsgQueue, fnOnRtnQuoteCancelOrder pCallback);
+
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnQuoteOrder")]
+        public static extern void XSpeed_RegOnRtnQuoteOrder(IntPtr pMsgQueue, fnOnRtnQuoteOrder pCallback);
+
         [DllImport(CommApi.DllFileName, EntryPoint = "TD_CreateTdApi")]
         public static extern IntPtr TD_CreateTdApi();
 
@@ -81,8 +93,32 @@ namespace QuantBox.CSharp2XSpeed
             DFITCOrderPropertyType orderProperty,
             DFITCInstrumentTypeType nInstrumentType);
 
+        [DllImport(CommApi.DllFileName, EntryPoint = "TD_SendQuoteOrder")]
+        public static extern int TD_SendQuoteOrder(
+            IntPtr pTraderApi,
+            int localOrderID,
+            string szInstrument,
+            string quoteID,
+            int bOrderAmount,
+            int sOrderAmount,
+            double bInsertPrice,
+            double sInsertPrice,
+            DFITCOpenCloseTypeType bOpenCloseType,
+            DFITCOpenCloseTypeType sOpenCloseType,
+            DFITCSpeculatorType bSpeculator,
+            DFITCSpeculatorType sSpeculator,
+            int stayTime,
+            DFITCInstrumentTypeType nInstrumentType);
+
         [DllImport(CommApi.DllFileName, EntryPoint = "TD_CancelOrder")]
         public static extern void TD_CancelOrder(
+            IntPtr pTraderApi,
+            string szInstrument,
+            int localOrderID,
+            int spdOrderID);
+
+        [DllImport(CommApi.DllFileName, EntryPoint = "TD_CancelQuoteOrder")]
+        public static extern void TD_CancelQuoteOrder(
             IntPtr pTraderApi,
             string szInstrument,
             int localOrderID,

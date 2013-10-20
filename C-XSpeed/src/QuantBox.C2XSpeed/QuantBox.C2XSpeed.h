@@ -180,8 +180,7 @@ QUANTBOXC2XSPEED_API int __stdcall TD_SendQuoteOrder(
 	DFITCSpeculatorType bSpeculator,
 	DFITCSpeculatorType sSpeculator,
 	DFITCStayTimeType stayTime,
-	DFITCInstrumentTypeType nInstrumentType,
-	DFITCBuySellTypeType buySellType);
+	DFITCInstrumentTypeType nInstrumentType);
 
 //³·µ¥
 QUANTBOXC2XSPEED_API void __stdcall TD_CancelQuoteOrder(
