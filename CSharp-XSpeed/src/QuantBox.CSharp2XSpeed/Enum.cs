@@ -58,6 +58,10 @@ namespace QuantBox.CSharp2XSpeed
         /// 期权执行
         /// </summary>
         EXECUTE = 6,
+        /// <summary>
+        /// 询价
+        /// </summary>
+        QUOTE = 9,
     }
 
     /// <summary>

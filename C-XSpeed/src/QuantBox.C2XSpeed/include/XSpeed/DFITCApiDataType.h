@@ -124,6 +124,9 @@ typedef int DFITCOpenCloseTypeType;
 ///期权执行
 #define DFITC_SPD_EXECUTE               6
 
+///询价
+#define DFITC_SPD_QUOTE                 9
+
 //(做市商请求，仅支持“开仓”“平仓”)
 
 
