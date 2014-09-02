@@ -24,10 +24,6 @@ namespace QuantBox.CSharp2XSpeed
     public enum DFITCBuySellTypeType:short
     {
         /// <summary>
-        /// 双边，做市商操作特有字段
-        /// </summary>
-        ALL = 0,
-        /// <summary>
         /// 买
         /// </summary>
         BUY = 1,
@@ -59,9 +55,25 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         EXECUTE = 6,
         /// <summary>
+        /// 期权放弃
+        /// </summary>
+        GIVEUP = 7,
+        /// <summary>
+        /// 期权履约
+        /// </summary>
+        PERFORM = 8,
+        /// <summary>
         /// 询价
         /// </summary>
-        QUOTE = 9,
+        OPTQRYPRICE = 9,
+        /// <summary>
+        /// 强平
+        /// </summary>
+        FORCECLOSE = 12,
+        /// <summary>
+        /// 强平今
+        /// </summary>
+        FORCECLOSETODAY = 14,
     }
 
     /// <summary>
@@ -104,6 +116,10 @@ namespace QuantBox.CSharp2XSpeed
         /// 套利委托
         /// </summary>
         ARBITRAGE = 4,
+        /// <summary>
+        /// 展期互换委托
+        /// </summary>
+        EXTENSION = 8,
     }
 
     /// <summary>
@@ -159,6 +175,31 @@ namespace QuantBox.CSharp2XSpeed
         /// 成交成功
         /// </summary>
         SUCCESS_FILLED = 12,
+        
+        ///////////////////////////////////////////////////////////////
+        ///基于算法单模块新增
+        ///////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 未触发
+        /// </summary>
+        EXT_UNTRIGGER = 13,
+        /// <summary>
+        /// 部分触发
+        /// </summary>
+        EXT_PART_TRIGGER = 14,
+        /// <summary>
+        /// 全部触发
+        /// </summary>
+        EXT_ALL_TRIGGER = 15,
+        /// <summary>
+        /// 已经撤单
+        /// </summary>
+        EXT_CANCELLED = 16,
+        /// <summary>
+        /// 报单失败
+        /// </summary>
+        EXT_FAILED = 17,
     }
 
     /// <summary>
@@ -334,11 +375,11 @@ namespace QuantBox.CSharp2XSpeed
         /// <summary>
         /// 看涨
         /// </summary>
-        LOOK_UP = 1,
+        CALL = 1,
         /// <summary>
         /// 看跌
         /// </summary>
-        LOOK_DOWN = 2,
+        PUT = 2,
     }
 
     /// <summary>
@@ -414,5 +455,166 @@ namespace QuantBox.CSharp2XSpeed
         /// 交易所
         /// </summary>
         SOURCE_EXCHANGE = 1
+    }
+
+    /// <summary>
+    /// DFITCExtOrderType:算法单类型数据类型
+    /// </summary>
+    public enum DFITCExtOrderType : int
+    {
+        /// <summary>
+        /// 预埋单
+        /// </summary>
+        YMORDER = 1,
+        /// <summary>
+        /// 条件单
+        /// </summary>
+        TJORDER = 2,
+        /// <summary>
+        /// 跨期套利订单
+        /// </summary>
+        KQTLDD = 3,
+        /// <summary>
+        /// 跨品种套利订单
+        /// </summary>
+        KPZTLDD = 4,
+        /// <summary>
+        /// 蝶式套利订单
+        /// </summary>
+        DSTLDD = 5,
+        /// <summary>
+        /// 自定义套利订单(暂不支持)
+        /// </summary>
+        ZDYTLDD = 6,
+    }
+
+    /// <summary>
+    /// DFITCPriceReference:价格参照数据类型
+    /// </summary>
+    public enum DFITCPriceReference : int
+    {
+        /// <summary>
+        /// 参照最新价
+        /// </summary>
+        REF_LASTPRICE = 0,
+        /// <summary>
+        /// 参照买一价
+        /// </summary>
+        REF_BIDPRICE = 1,
+        /// <summary>
+        /// 参照卖出价
+        /// </summary>
+        REF_ASKPRICE = 2,
+    }
+
+    /// <summary>
+    /// DFITCCompareFlag:比较标志数据类型
+    /// </summary>
+    public enum DFITCCompareFlag : int
+    {
+        /// <summary>
+        /// 大于
+        /// </summary>
+        GREATER = 0,
+        /// <summary>
+        /// 大于等于
+        /// </summary>
+        NOTLESS = 1,
+        /// <summary>
+        /// 小于
+        /// </summary>
+        LESS = 2,
+        /// <summary>
+        /// 小于等于
+        /// </summary>
+        NOTGREATER = 3,
+    }
+
+    /// <summary>
+    /// DFITCOvernightFlag:隔夜标志数据类型
+    /// </summary>
+    public enum DFITCOvernightFlag : int
+    {
+        /// <summary>
+        /// 隔夜
+        /// </summary>
+        OVERNIGHT = 1,
+        /// <summary>
+        /// 不隔夜
+        /// </summary>
+        NOT_OVERNIGHT = 2,
+    }
+
+    /// <summary>
+    /// DFITCExtTriggerCond:触发条件数据类型
+    /// </summary>
+    public enum DFITCExtTriggerCond : int
+    {
+        /// <summary>
+        /// 价格触发
+        /// </summary>
+        TRIGGER_PRICE = 0,
+        /// <summary>
+        /// 时间触发
+        /// </summary>
+        TRIGGER_TIME = 1,
+    }
+
+    /// <summary>
+    /// DFITCExchangeStatusType:交易所状态数据类型
+    /// </summary>
+    public enum DFITCExchangeStatusType : int
+    {
+        /// <summary>
+        /// 开盘前
+        /// </summary>
+        BEFORETRADING = 0,
+        /// <summary>
+        /// 非交易
+        /// </summary>
+        NOTRADING = 1,
+        /// <summary>
+        /// 连续交易
+        /// </summary>
+        CONTINOUS = 2,
+        /// <summary>
+        /// 集合竞价报单
+        /// </summary>
+        AUCTIONORDERING = 3,
+        /// <summary>
+        /// 集合竞价价格平衡
+        /// </summary>
+        AUCTIONBALANCE = 4,
+        /// <summary>
+        /// 集合竞价撮合
+        /// </summary>
+        AUCTIONMATCH = 5,
+        /// <summary>
+        /// 收盘
+        /// </summary>
+        CLOSED = 6,
+    }
+
+    /// <summary>
+    /// DFITCComputeModeType：计算方式数据类型
+    /// </summary>
+    public enum DFITCComputeModeType : int
+    {
+        /// <summary>
+        /// 绝对数值计算
+        /// </summary>
+        ABSOLUTE_VALUE_COMPUTE = 0,
+        /// <summary>
+        /// 交易所保证金标准基础上浮动
+        /// </summary>
+        EXCHANGE_MARGIN_BASIS_FLOAT = 1,
+        /// <summary>
+        /// 交易所保证金结果基础上浮动
+        /// </summary>
+        EXCHANGE_MARGIN_RESULT_FLOAT = 2,
+        /// <summary>
+        /// 期货保证金标准基础上浮动
+        /// </summary>
+        FUTURES_MARGIN_BASIS_FLOAT = 3,
     }
 }

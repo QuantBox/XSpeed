@@ -1,10 +1,10 @@
-/**
+ /**
  * 版权所有(C)2012-2016, 大连飞创信息技术有限公司
  * 文件名称：DFITCTraderApi.h
  * 文件说明：定义XSpeed交易接口
- * 当前版本：1.0.12
+ * 当前版本：1.0.13
  * 作者：XSpeed项目组
- * 发布日期：2013年8月15日
+ * 发布日期：2014年5月27日
  */
 
 #ifndef DFITCTRADERAPI_H_
@@ -33,7 +33,7 @@ namespace DFITCXSPEEDAPI
           * 当网络可用，将自动建立连接，并调用该方法通知客户端， 客户端可以在实现该方法时，重新使用资金账号进行登录。
           *（该方法是在Api和前置机建立连接后被调用，该调用仅仅是说明tcp连接已经建立成功。用户需要自行登录才能进行后续的业务操作。
           *  登录失败则此方法不会被调用。）
-          */     
+          */
          virtual void OnFrontConnected(){};
 
          /**
@@ -46,7 +46,6 @@ namespace DFITCXSPEEDAPI
           *        0x2003 收到错误报文  
           */
          virtual void OnFrontDisconnected(int nReason){};
-
          /**
           * 登陆请求响应:当用户发出登录请求后，前置机返回响应时此方法会被调用，通知用户登录是否成功。
           * @param pUserLoginInfoRtn:用户登录信息结构地址。
@@ -163,12 +162,6 @@ namespace DFITCXSPEEDAPI
          virtual void OnRtnTradingNotice(struct DFITCTradingNoticeInfoField * pTradingNoticeInfo){};
 
          /**
-          * 合约交易状态通知响应:用于接收合约在开市情况下的状态。
-          * @param pInstrumentStatus: 返回交易合约状态通知结构的地址。
-          */
-         virtual void OnRtnInstrumentStatus(struct DFITCInstrumentStatusField * pInstrumentStatus){};
-
-         /**
           * 密码修改响应:用于修改资金账户登录密码。
           * @param pResetPassword: 返回密码修改结构的地址。
           */ 
@@ -210,36 +203,59 @@ namespace DFITCXSPEEDAPI
           */
          virtual void OnRspTradingDay(struct DFITCTradingDayRtnField * pTradingDayRtnData){};
 
-		 /**
-          * 报单通知订阅响应。
+         /**
+          * 报单通知订阅响应(暂不支持)
+          * @param pRspQuoteSubscribeData:指向报单通知响应地址的指针。
           */
-		 virtual void OnRspQuoteSubscribe(struct DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData){};
+         virtual void OnRspQuoteSubscribe(struct DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData){};
 
-		 /**
-          * 报单通知订阅回报。
+         /**
+          * 报单通知订阅回报(暂不支持)
+          * @param pRtnQuoteSubscribeData:指向报单通知回报地址的指针。
           */
-		 virtual void OnRtnQuoteSubscribe(struct DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData){};
+         virtual void OnRtnQuoteSubscribe(struct DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData){};
 		 
-		 /**
-          * 做市商报单响应
+         /**
+          * 报单通知退订响应(暂不支持)
+          * @param pRspQuoteUnSubscribeData:指向报单通知退订响应地址的指针。
           */
-		 virtual void OnRspQuoteInsertOrder(struct DFITCQuoteOrderRspField * pRspQuoteOrderData, struct DFITCErrorRtnField * pErrorInfo) {};
+         virtual void OnRspUnQuoteSubscribe(struct DFITCQuoteUnSubscribeRspField * pRspQuoteUnSubscribeData){};
 
-		 /**
-          * 做市商报单回报
+         /**
+          * 做市商报单响应(暂不支持)
+          * @param pRspQuoteData:指向做市商报单响应地址的指针。
           */
-		 virtual void OnRtnQuoteOrder(struct DFITCQuoteOrderRtnField * pRtnQuoteOrderData){};
+         virtual void OnRspQuoteInsert(struct DFITCQuoteRspField * pRspQuoteData, struct DFITCErrorRtnField * pErrorInfo) {};
 
-		 /**
-          * 做市商撤单响应
+         /**
+          * 做市商报单回报(暂不支持)
+          * @param pRtnQuoteData:指向做市商报单回报地址的指针。
           */
-		 virtual void OnRspQuoteCancelOrder( struct DFITCQuoteOrderRspField * pRspQuoteCanceledData,struct DFITCErrorRtnField * pErrorInfo)  {};
+         virtual void OnRtnQuote(struct DFITCQuoteRtnField * pRtnQuoteData){};
 
-	 	 /**
-          * 做市商撤单回报
+         /**
+          * 做市商撤单响应(暂不支持)
+          * @param pRspQuoteCanceledData:指向做市商撤单响应地址的指针。
           */
-		 virtual void OnRtnQuoteCancelOrder(struct DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData) {};   
+         virtual void OnRspQuoteCancel( struct DFITCQuoteRspField * pRspQuoteCanceledData,struct DFITCErrorRtnField * pErrorInfo)  {};
 
+         /**
+          * 做市商撤单回报(暂不支持)
+          * @param pRtnQuoteCanceledData:指向做市商撤单回报地址的指针。
+          */
+         virtual void OnRtnQuoteCancel(struct DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData) {};   
+         /**
+          * 交易所状态查询响应
+          * @param pRspExchangeStatusData:指向交易所状态查询响应地址的指针。
+          */
+         virtual void OnRspQryExchangeStatus(struct DFITCExchangeStatusRspField * pRspExchangeStatusData){};
+
+         /**
+          * 交易所状态通知
+          * @param pRtnExchangeStatusData:指向交易所状态通知地址的指针。
+          */
+         virtual void OnRtnExchangeStatus(struct DFITCExchangeStatusRtnField * pRtnExchangeStatusData){};
+		 
      };//end of DFITCTraderSpi
 
      class DFITCTRADERAPI_API DFITCTraderApi
@@ -280,35 +296,35 @@ namespace DFITCXSPEEDAPI
          /**
           * 用户发出登录请求
           * @param pUserLoginData:指向用户登录请求结构的地址。
-          * @return 0 - 发送登录请求成功; 1 - 发送登录请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */ 
          virtual int ReqUserLogin(struct DFITCUserLoginField * pUserLoginData) = 0;
 
          /**
           * 用户发出登出请求
           * @param pUserLogoutData:指向用户登录请出结构的地址。
-          * @return 0 - 发送登出请求成功; 1 - 发送登出请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */ 
          virtual int ReqUserLogout(struct DFITCUserLogoutField * pUserLogoutData) = 0;
 
          /**
           * 期货委托报单请求。
           * @param pInsertOrderData:用户请求报单信息结构地址。
-          * @return 0 - 发送下单请求成功; 1 - 发送下单请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqInsertOrder(struct DFITCInsertOrderField * pInsertOrderData) = 0;
 
          /**
           * 期货撤单请求。
           * @param pCancelOrderData:用户请求撤单信息结构地址。
-          * @return 0 - 发送撤单请求成功; 1 - 发送撤单请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           * (如果提供柜台委托号(柜台委托号大于-1)，则只使用柜台委托号处理；只有当柜台委托号小于0时，才使用本地委托号进行撤单)
           */
          virtual int ReqCancelOrder(struct DFITCCancelOrderField * pCancelOrderData) = 0;
 
          /**
           * 持仓查询请求。
-          * @param pPositionData:指向请求持仓查询结构地址。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           * @return 0 - 发送查询请求成功; 1 - 发送查询请求失败。（如果没有提供合约代码，则查询全部持仓信息。）
           */
          virtual int ReqQryPosition(struct DFITCPositionField * pPositionData) = 0;
@@ -316,116 +332,133 @@ namespace DFITCXSPEEDAPI
          /**
           * 客户资金查询请求。
           * @param pCapitalData:请求资金查询结构地址。
-          * @return 0 - 发送查询请求成功; 1 - 发送查询请求失败。(用户需要填充该结构的各个字段。)
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。(用户需要填充该结构的各个字段。)
           */
          virtual int ReqQryCustomerCapital(struct DFITCCapitalField * pCapitalData) = 0;
 
          /**
           * 查询交易所合约列表（非套利）。
           * @param pExchangeInstrumentData:交易所合约查询结构地址。
-          * @return 0 - 发送查询请求成功; 1 - 发送查询请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqQryExchangeInstrument(struct DFITCExchangeInstrumentField * pExchangeInstrumentData) = 0;
 
          /**
           * 查询交易所套利合约列表。
           * @param pAbtriInstrumentData:交易所套利合约查询结构地址。
-          * @return 0 - 发送查询请求成功; 1 - 发送查询请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqQryArbitrageInstrument(struct DFITCAbiInstrumentField * pAbtriInstrumentData) = 0;
 
          /**
           * 当日委托查询请求。
           * @param pOrderData:当日委托查询结构地址。
-          * @return 0 - 发送查询请求成功; 1 - 发送查询请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqQryOrderInfo(struct DFITCOrderField * pOrderData) = 0;
 
          /**
           * 当日成交查询请求。
           * @param pMatchData:当日成交查询结构地址。
-          * @return 0 - 发送查询请求成功; 1 - 发送查询请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqQryMatchInfo(struct DFITCMatchField * pMatchData) = 0;
 
          /**
           * 指定合约信息查询请求。
           * @param pInstrument:指定合约查询结构地址。
-          * @return 0 - 发送查询请求成功; 1 - 发送查询请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqQrySpecifyInstrument(struct DFITCSpecificInstrumentField * pInstrument) = 0;
 
          /**
           * 持仓明细查询请求。
           * @param pInstrument:持仓明细查询结构地址。
-          * @return 0 - 发送查询请求成功; 1 - 发送查询请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqQryPositionDetail(struct DFITCPositionDetailField * pPositionDetailData) = 0;
 
          /**
           * 厂商ID确认请求。
-          * @return 0 - 发送确认请求成功; -1 - 发送确认请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败。
           */
          virtual int ReqConfirmProductInfo(struct DFITCProductField * pConfirmProductData) = 0;
 
          /**
           * 密码修改请求
           * @param pResetPasswordData:密码修改结构地址。
-          * @return 0 - 发送修改请求成功; 1 - 发送修改请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqResetPassword (struct DFITCResetPwdField * pResetPasswordData) =0;
 
          /**
           * 账单确认请求。
           * @param pBillConfirmData:账单确认结构地址。
-          * @return 0 - 发送确认请求成功; 1 - 发送确认请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqBillConfirm(struct DFITCBillConfirmField * pBillConfirmData) = 0;
 
          /**
           * 交易编码查询请求。
           * @param pTradeCodeData:交易编码查询请求结构地址。
-          * @return 0 - 发送查询请求成功; 1 - 发送查询请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqQryTradeCode(struct DFITCQryTradeCodeField * pTradeCodeData) = 0;
 
          /**
           * 查询客户权益计算方式请求。
-          * @return 0 - 发送查询请求成功; -1 - 发送查询请求失败。
+          * @return 0 - 请求发送成功; -1 - 请求发送失败。
           */
          virtual int ReqEquityComputMode() = 0;
 
          /**
           * 客户账单结算查询请求。
           * @param pQryBillData:客户账单结算请求结构地址。 
-          * @return 0 - 发送查询请求成功; -1 - 发送查询请求失败。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqQryBill(struct DFITCQryBillField * pQryBillData) = 0;
 
          /**
           * 交易日查询请求
-          * @return 0 - 发送查询请求成功; -1 - 发送查询请求失败。
+          * @param pTradingDay:交易日查询请求结构地址。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败。
           */
          virtual int ReqTradingDay(struct DFITCTradingDayField * pTradingDay) = 0;
 
          /**
-          * 报价通知订阅请求
-          * @return 0 - 发送订阅请求成功; -1 - 发送订阅请求失败。
+          * 报价通知订阅请求(暂不支持)
+          * @param pQuoteSubscribeData:报价通知订阅请求结构地址。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
           */
          virtual int ReqQuoteSubscribe(struct DFITCQuoteSubscribeField * pQuoteSubscribeData) = 0;
 
-        /**
-         * 做市商报单请求
-         * @return 0 - 发送报单请求成功; -1 - 发送报单请求失败
-         */
-        virtual int ReqQuoteInsertOrder(struct DFITCQuoteInsertOrderField * pQuoteInsertOrderData)  = 0;
+         /**
+          * 报价通知退订请求(暂不支持)
+          * @param pQuoteUnSubscribeData:报价通知退订请求结构地址。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
+          */
+         virtual int ReqQuoteUnSubscribe(struct DFITCQuoteUnSubscribeField * pQuoteUnSubscribeData) = 0;
 
-        /**
-         * 做市商撤单请求
-         * @return 0 - 发送撤单请求成功; -1 - 发送撤单请求失败
-         */
-        virtual int ReqQuoteCancelOrder(struct DFITCCancelOrderField * pQuoteCancelOrderData) = 0;  
+         /**
+          * 做市商报单请求(暂不支持)
+          * @param pQuoteInsertOrderData:做市商报单请求结构地址。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
+          */
+         virtual int ReqQuoteInsert(struct DFITCQuoteInsertField * pQuoteInsertOrderData)  = 0;
 
+         /**
+          * 做市商撤单请求(暂不支持)
+          * @param pQuoteCancelOrderData:做市商撤单请求结构地址。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
+          */
+         virtual int ReqQuoteCancel(struct DFITCCancelOrderField * pQuoteCancelOrderData) = 0;  
+
+         /**
+          * 交易所状态查询
+          * @param pQryExchangeStatusData:交易所状态查询请求结构地址。
+          * @return 0 - 请求发送成功 -1 - 请求发送失败  -2 -检测异常。
+          */
+         virtual int ReqQryExchangeStatus(struct DFITCQryExchangeStatusField *pQryExchangeStatusData) = 0;
      };//end of DFITCTraderSpi
 }
 //end of namespace

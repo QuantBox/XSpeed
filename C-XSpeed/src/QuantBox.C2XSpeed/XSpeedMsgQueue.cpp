@@ -150,8 +150,8 @@ void CXSpeedMsgQueue::_Output_TD(SMsgItem* pMsgItem)
 	case E_fnOnRspCustomerCapital:
 		Output_OnRspCustomerCapital(pMsgItem);
 		break;
-	case E_fnOnRtnInstrumentStatus:
-		Output_OnRtnInstrumentStatus(pMsgItem);
+	case E_fnOnRtnExchangeStatus:
+		Output_OnRtnExchangeStatus(pMsgItem);
 		break;
 	case E_fnOnRtnOrder:
 		Output_OnRtnOrder(pMsgItem);
@@ -169,17 +169,17 @@ void CXSpeedMsgQueue::_Output_TD(SMsgItem* pMsgItem)
 	case E_fnOnRtnQuoteSubscribe:
 		Output_OnRtnQuoteSubscribe(pMsgItem);
 		break;
-	case E_fnOnRspQuoteInsertOrder:
-		Output_OnRspQuoteInsertOrder(pMsgItem);
+	case E_fnOnRspQuoteInsert:
+		Output_OnRspQuoteInsert(pMsgItem);
 		break;
-	case E_fnOnRspQuoteCancelOrder:
-		Output_OnRspQuoteCancelOrder(pMsgItem);
+	case E_fnOnRspQuoteCancel:
+		Output_OnRspQuoteCancel(pMsgItem);
 		break;
-	case E_fnOnRtnQuoteCancelOrder:
-		Output_OnRtnQuoteCancelOrder(pMsgItem);
+	case E_fnOnRtnQuoteCancel:
+		Output_OnRtnQuoteCancel(pMsgItem);
 		break;
-	case E_fnOnRtnQuoteOrder:
-		Output_OnRtnQuoteOrder(pMsgItem);
+	case E_fnOnRtnQuote:
+		Output_OnRtnQuote(pMsgItem);
 		break;
 	default:
 		_ASSERT(false);
@@ -282,23 +282,23 @@ void CXSpeedMsgQueue::Input_OnMarketData(void* pMdApi,DFITCDepthMarketDataField 
 	}
 }
 
-void CXSpeedMsgQueue::Input_OnRtnInstrumentStatus(void* pTraderApi,DFITCInstrumentStatusField *pInstrumentStatus)
+void CXSpeedMsgQueue::Input_OnRtnExchangeStatus(void* pTraderApi, struct DFITCExchangeStatusRtnField * pRtnExchangeStatusData)
 {
-	if(NULL == pInstrumentStatus)
+	if (NULL == pRtnExchangeStatusData)
 		return;
 
 	SMsgItem* pItem = new SMsgItem;
 	if(pItem)
 	{
-		pItem->type = E_fnOnRtnInstrumentStatus;
+		pItem->type = E_fnOnRtnExchangeStatus;
 		pItem->pApi = pTraderApi;
 		
-		int size = sizeof(DFITCInstrumentStatusField);
+		int size = sizeof(DFITCExchangeStatusRtnField);
 		pItem->pBuf = new char[size];
 
-		if(pInstrumentStatus)
+		if (pRtnExchangeStatusData)
 		{
-			memcpy(pItem->pBuf,pInstrumentStatus,size);
+			memcpy(pItem->pBuf, pRtnExchangeStatusData, size);
 		}
 		else
 		{
@@ -849,9 +849,9 @@ void CXSpeedMsgQueue::Input_OnRtnQuoteSubscribe(void* pTraderApi,DFITCQuoteSubsc
 	}
 }
 
-void CXSpeedMsgQueue::Input_OnRspQuoteInsertOrder(void* pTraderApi,DFITCQuoteOrderRspField * pRspQuoteOrderData,DFITCErrorRtnField * pErrorInfo)
+void CXSpeedMsgQueue::Input_OnRspQuoteInsert(void* pTraderApi,DFITCQuoteRspField * pRspQuoteData,DFITCErrorRtnField * pErrorInfo)
 {
-	if(NULL == pRspQuoteOrderData
+	if(NULL == pRspQuoteData
 		&&NULL == pErrorInfo)
 		return;
 
@@ -859,26 +859,26 @@ void CXSpeedMsgQueue::Input_OnRspQuoteInsertOrder(void* pTraderApi,DFITCQuoteOrd
 	if(pItem)
 	{
 		memset(pItem,0,sizeof(SMsgItem));
-		pItem->type = E_fnOnRspQuoteInsertOrder;
+		pItem->type = E_fnOnRspQuoteInsert;
 		pItem->pApi = pTraderApi;
 
 		if(pErrorInfo)
 			pItem->RspInfo = *pErrorInfo;
 
-		if(pRspQuoteOrderData)
+		if (pRspQuoteData)
 		{
-			int size = sizeof(DFITCQuoteOrderRspField);
+			int size = sizeof(DFITCQuoteRspField);
 			pItem->pBuf = new char[size];
-			memcpy(pItem->pBuf,pRspQuoteOrderData,size);
+			memcpy(pItem->pBuf, pRspQuoteData, size);
 		}		
 
 		_Input_TD(pItem);
 	}
 }
 
-void CXSpeedMsgQueue::Input_OnRspQuoteCancelOrder(void* pTraderApi,DFITCQuoteOrderRspField * pRspQuoteOrderData,DFITCErrorRtnField * pErrorInfo)
+void CXSpeedMsgQueue::Input_OnRspQuoteCancel(void* pTraderApi,DFITCQuoteRspField * pRspQuoteData,DFITCErrorRtnField * pErrorInfo)
 {
-	if(NULL == pRspQuoteOrderData
+	if(NULL == pRspQuoteData
 		&&NULL == pErrorInfo)
 		return;
 
@@ -886,40 +886,40 @@ void CXSpeedMsgQueue::Input_OnRspQuoteCancelOrder(void* pTraderApi,DFITCQuoteOrd
 	if(pItem)
 	{
 		memset(pItem,0,sizeof(SMsgItem));
-		pItem->type = E_fnOnRspQuoteCancelOrder;
+		pItem->type = E_fnOnRspQuoteCancel;
 		pItem->pApi = pTraderApi;
 
 		if(pErrorInfo)
 			pItem->RspInfo = *pErrorInfo;
 
-		if(pRspQuoteOrderData)
+		if(pRspQuoteData)
 		{
-			int size = sizeof(DFITCQuoteOrderRspField);
+			int size = sizeof(DFITCQuoteRspField);
 			pItem->pBuf = new char[size];
-			memcpy(pItem->pBuf,pRspQuoteOrderData,size);
+			memcpy(pItem->pBuf,pRspQuoteData,size);
 		}		
 
 		_Input_TD(pItem);
 	}
 }
 
-void CXSpeedMsgQueue::Input_OnRtnQuoteOrder(void* pTraderApi,DFITCQuoteOrderRtnField * pRtnQuoteOrderData)
+void CXSpeedMsgQueue::Input_OnRtnQuote(void* pTraderApi,DFITCQuoteRtnField * pRtnQuoteData)
 {
-	if(NULL == pRtnQuoteOrderData)
+	if(NULL == pRtnQuoteData)
 		return;
 
 	SMsgItem* pItem = new SMsgItem;
 	if(pItem)
 	{
-		pItem->type = E_fnOnRtnQuoteOrder;
+		pItem->type = E_fnOnRtnOrder;
 		pItem->pApi = pTraderApi;
 
-		int size = sizeof(DFITCQuoteOrderRtnField);
+		int size = sizeof(DFITCQuoteRtnField);
 		pItem->pBuf = new char[size];
 
-		if(pRtnQuoteOrderData)
+		if(pRtnQuoteData)
 		{		
-			memcpy(pItem->pBuf,pRtnQuoteOrderData,size);
+			memcpy(pItem->pBuf,pRtnQuoteData,size);
 		}
 		else
 		{
@@ -930,7 +930,7 @@ void CXSpeedMsgQueue::Input_OnRtnQuoteOrder(void* pTraderApi,DFITCQuoteOrderRtnF
 	}
 }
 
-void CXSpeedMsgQueue::Input_OnRtnQuoteCancelOrder(void* pTraderApi,DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData)
+void CXSpeedMsgQueue::Input_OnRtnQuoteCancel(void* pTraderApi,DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData)
 {
 	if(NULL == pRtnQuoteCanceledData)
 		return;
@@ -938,7 +938,7 @@ void CXSpeedMsgQueue::Input_OnRtnQuoteCancelOrder(void* pTraderApi,DFITCQuoteCan
 	SMsgItem* pItem = new SMsgItem;
 	if(pItem)
 	{
-		pItem->type = E_fnOnRtnQuoteCancelOrder;
+		pItem->type = E_fnOnRtnQuoteCancel;
 		pItem->pApi = pTraderApi;
 
 		int size = sizeof(DFITCQuoteCanceledRtnField);

@@ -2,9 +2,9 @@
  * 版权所有(C)2012-2016, 大连飞创信息技术有限公司
  * 文件名称：DFITCApiDataType.h
  * 文件说明：定义接口所需的数据类型的头文件
- * 当前版本：1.0.12
+ * 当前版本：1.0.13
  * 作者：XSpeed项目组
- * 发布日期：2013年8月15日
+ * 发布日期：2014年5月27日
  */
  
 #ifndef DFITCAPIDATATYPE_H
@@ -33,15 +33,9 @@ typedef int DFITCExecStateType;
 
 
 ////////////////////////////////////////////////////////////
-///DFITCAccountType：交易编码数据类型
+///DFITCClientIDType：交易编码数据类型
 ////////////////////////////////////////////////////////////
 typedef char DFITCClientIDType[13];
-///投机
-#define DFITC_ClIENTID_SPECULATOR       0
-///套保
-#define DFITC_ClIENTID_HEDGE            1
-///套利
-#define DFITC_ClIENTID_ARBITRAGE        2
 
 
 ////////////////////////////////////////////////////////////
@@ -67,9 +61,9 @@ typedef char DFITCVarietyNameType[31];
 
 
 ////////////////////////////////////////////////////////////
-///DFITCinstrumentNameType：合约名称数据类型
+///DFITCInstrumentNameType：合约名称数据类型
 ////////////////////////////////////////////////////////////
-typedef char DFITCinstrumentNameType[31];
+typedef char DFITCInstrumentNameType[31];
 
 
 ////////////////////////////////////////////////////////////
@@ -105,15 +99,10 @@ typedef short DFITCBuySellTypeType;
 ///卖
 #define DFITC_SPD_SELL                  2
 
-//(以下为做市商操作特有字段)
 
-///双边
-#define DFITC_SPD_ALL                   0
-
-
-//////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 ///DFITCOpenCloseTypeType：开平标志数据类型
-//////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 typedef int DFITCOpenCloseTypeType;
 ///开仓
 #define DFITC_SPD_OPEN                  1
@@ -123,11 +112,16 @@ typedef int DFITCOpenCloseTypeType;
 #define DFITC_SPD_CLOSETODAY            4
 ///期权执行
 #define DFITC_SPD_EXECUTE               6
-
+///期权放弃
+#define DFITC_SPD_GIVEUP                7
+///期权履约
+#define DFITC_SPD_PERFORM               8   
 ///询价
-#define DFITC_SPD_QUOTE                 9
-
-//(做市商请求，仅支持“开仓”“平仓”)
+#define DFITC_SPD_OPTQRYPRICE           9
+///强平
+#define DFITC_SPD_FORCECLOSE            12
+///强平今
+#define DFITC_SPD_FORCECLOSETODAY       14
 
 
 ////////////////////////////////////////////////////////////
@@ -171,6 +165,11 @@ typedef char DFITCPasswdType[41];
 
 ////////////////////////////////////////////////////////////
 ///DFITCSPDOrderIDType:柜台委托号数据类型
+///柜台委托号和条件单号使用相同字段表示
+///当DFITCSPDOrderIDType的取值为正数[最小为1 ]，表示为柜台委
+///托号，该笔报单已经到柜台
+///当DFITCSPDOrderIDType的取值为负数[最大为-2]，标示为条件单
+///号，该笔报单在条件单模块
 ////////////////////////////////////////////////////////////
 typedef long DFITCSPDOrderIDType;
 
@@ -191,6 +190,8 @@ typedef int DFITCOrderTypeType;
 #define DFITC_MKORDER                   2
 ///套利委托
 #define DFITC_ARBITRAGE                 4
+///展期互换委托
+#define DFITC_EXTENSION                 8
 
 
 ////////////////////////////////////////////////////////////
@@ -222,6 +223,21 @@ typedef short DFITCOrderAnswerStatusType;
 ///成交成功
 #define DFITC_SPD_SUCCESS_FILLED        12
 
+///////////////////////////////////////////////////////////////
+///基于算法单模块新增
+///////////////////////////////////////////////////////////////
+
+///未触发
+#define DFITC_EXT_UNTRIGGER             13
+///部分触发
+#define DFITC_EXT_PART_TRIGGER          14
+///全部触发
+#define DFITC_EXT_ALL_TRIGGER           15
+///已经撤单
+#define DFITC_EXT_CANCELLED             16
+///报单失败
+#define	DFITC_EXT_FAILED                17
+
 
 ////////////////////////////////////////////////////////////
 ///DFITCMatchIDType:成交编号数据类型
@@ -233,11 +249,6 @@ typedef char DFITCMatchIDType[32];
 ///DFITCDateType：时间数据类型
 ////////////////////////////////////////////////////////////
 typedef char DFITCDateType[13];
-
-////////////////////////////////////////////////////////////
-///DFITCDateType：停留时间数据类型
-////////////////////////////////////////////////////////////
-typedef int DFITCStayTimeType;
 
 
 ////////////////////////////////////////////////////////////
@@ -259,7 +270,6 @@ typedef int DFITCSpeculatorType;
 ///套利
 #define DFITC_SPD_ARBITRAGE             2
 
-//（做市商请求，仅支持“投机”“套保”）
 
 ////////////////////////////////////////////////////////////
 ///DFITCFeeType:手续费数据类型
@@ -321,6 +331,10 @@ typedef long DFITCSessionIDType;
 ///DFITCAccountLogoutResultType:资金帐号登出结果
 ////////////////////////////////////////////////////////////
 typedef int DFITCAccountLogoutResultType;
+///登出成功
+#define DFITC_LOGOUT_SUCCESS             0
+///登出失败
+#define DFITC_LOGOUT_FAILED              1
 
 
 ////////////////////////////////////////////////////////////
@@ -469,8 +483,10 @@ typedef int DFITCInsertType;
 typedef int DFITCOptionTypeType;
 ///看涨
 #define DFITC_OPT_LOOK_UP               1
+#define DFITC_OPT_CALL                  1
 ///看跌
 #define DFITC_OPT_LOOK_DOWN             2
+#define DFITC_OPT_PUT                   2
 
 
 ////////////////////////////////////////////////////////////
@@ -503,12 +519,6 @@ typedef char DFITCContentType[501];
 ///DFITCInstrumentStatusType:合约交易状态数据类型
 ////////////////////////////////////////////////////////////
 typedef int DFITCInstrumentStatusType;
-
-
-////////////////////////////////////////////////////////////
-///DFITCTradingSegmentSNType:交易阶段编号数据类型
-////////////////////////////////////////////////////////////
-typedef int DFITCTradingSegmentSNType;
 
 
 ////////////////////////////////////////////////////////////
@@ -622,15 +632,15 @@ typedef long DFITCRequestIDType;
 
 
 ////////////////////////////////////////////////////////////
+///DFITCCustomCategoryType:自定义类别数据类型
+////////////////////////////////////////////////////////////
+typedef char DFITCCustomCategoryType[32];
+
+
+////////////////////////////////////////////////////////////
 ///DFITCReservedType:预留字段数据类型
 ////////////////////////////////////////////////////////////
 typedef int  DFITCReservedType;
-
-
-////////////////////////////////////////////////////////////
-///DFITCContentType:消息正文数据类型
-////////////////////////////////////////////////////////////
-typedef char DFITCContentType[501];
 
 
 ////////////////////////////////////////////////////////////
@@ -644,21 +654,86 @@ typedef short DFITCNoticeType;
 
 
 ////////////////////////////////////////////////////////////
-///DFITCInstrumentStatusType:合约交易状态数据类型
-////////////////////////////////////////////////////////////
-typedef int DFITCInstrumentStatusType;
-
-
-////////////////////////////////////////////////////////////
 ///DFITCTradingSegmentSNType:交易阶段编号数据类型
 ////////////////////////////////////////////////////////////
 typedef int DFITCTradingSegmentSNType;
 
 
-////////////////////////////////////////////////////////////
-///DFITCInstStatusEnterReasonType:进入本状态原因数据类型
-////////////////////////////////////////////////////////////
-typedef short DFITCInstStatusEnterReasonType;
+//////////////////////////////////////////////
+///DFITCExtOrderType:算法单类型数据类型
+//////////////////////////////////////////////
+typedef int DFITCExtOrderType;
+
+///预埋单
+#define DFITC_YMORDER                   1
+///条件单
+#define DFITC_TJORDER                   2
+///跨期套利订单
+#define DFITC_KQTLDD                    3
+///跨品种套利订单
+#define DFITC_KPZTLDD                   4
+///蝶式套利订单
+#define DFITC_DSTLDD                    5
+///自定义套利订单(暂不支持)
+#define DFITC_ZDYTLDD                   6
+
+//////////////////////////////////////////////
+///DFITCTriggerTime:触发时间数据类型
+//////////////////////////////////////////////
+typedef char DFITCTriggerTime[10];
+
+
+//////////////////////////////////////////////
+///DFITCPriceReference:价格参照数据类型
+//////////////////////////////////////////////
+typedef int DFITCPriceReference;
+
+///参照最新价
+#define DFITC_REF_LASTPRICE             0
+///参照买一价
+#define DFITC_REF_BIDPRICE              1
+///参照卖出价
+#define DFITC_REF_ASKPRICE              2
+
+//////////////////////////////////////////////
+///DFITCCompareFlag:比较标志数据类型
+//////////////////////////////////////////////
+typedef int DFITCCompareFlag;
+
+///大于
+#define DFITC_CF_GREATER                0
+///大于等于
+#define DFITC_CF_NOTLESS                1
+///小于
+#define DFITC_CF_LESS                   2
+///小于等于
+#define DFITC_CF_NOTGREATER             3
+
+//////////////////////////////////////////////
+///DFITCOvernightFlag:隔夜标志数据类型
+//////////////////////////////////////////////
+typedef int DFITCOvernightFlag;
+
+///隔夜
+#define DFITC_OVERNIGHT                 1
+///不隔夜
+#define DFITC_NOT_OVERNIGHT             2
+
+//////////////////////////////////////////////
+///DFITCArbitragePrice:套利价格数据类型
+//////////////////////////////////////////////
+typedef double DFITCArbitragePrice;
+
+
+//////////////////////////////////////////////
+///DFITCExtTriggerCond:触发条件数据类型
+//////////////////////////////////////////////
+typedef int DFITCExtTriggerCond;
+
+///价格触发
+#define DFITC_TRIGGER_PRICE             0
+///时间触发
+#define DFITC_TRIGGER_TIME              1
 
 
 ////////////////////////////////////////////////////////////
@@ -668,49 +743,95 @@ typedef char DFITCInstrumentMaturityType[12];
 
 
 ////////////////////////////////////////////////////////////
-///DFITCInvestmentInfoType:组合或对锁的保证金调整信息
+///DFITCAdjustmentInfoType:组合或对锁的保证金调整信息
 ///格式:[合约代码,买卖标志,投资类别,调整金额;]
 ////////////////////////////////////////////////////////////
 typedef char DFITCAdjustmentInfoType[64];
 
-////////////////////////////////////////////////////////////
-///DFITCSubscribeFlagType:订阅状态
-////////////////////////////////////////////////////////////
-typedef short DFITCSubscribeFlagType; 
-///订阅成功
-#define DFITC_QUOTE_SUB_SUCCESS
-///订阅失败
-#define DFITC_QUOTE_SUB_FAILED
 
 ////////////////////////////////////////////////////////////
 ///DFITCQuoteIDType:询价编号
 ////////////////////////////////////////////////////////////
 typedef char DFITCQuoteIDType[33];
 
+
 ////////////////////////////////////////////////////////////
 ///DFITCSourceType:来源
 ////////////////////////////////////////////////////////////
 typedef short DFITCSourceType;
+
 ///会员
 #define DFITC_SOURCE_MEMBER            0
 ///交易所
 #define DFITC_SOURCE_EXCHANGE          1
+
 
 ////////////////////////////////////////////////////////////
 ///DFITCSeatCodeType:席位代码
 ////////////////////////////////////////////////////////////
 typedef char DFITCSeatCodeType[33];
 
+
 ////////////////////////////////////////////////////////////
 ///DFITCCloseIDType:平仓执行单号
 ////////////////////////////////////////////////////////////
 typedef char DFITCCloseIDType[33];
+
 
 ////////////////////////////////////////////////////////////
 ///DFITCEntrusTellerType:委托柜员
 ////////////////////////////////////////////////////////////
 typedef char DFITCEntrusTellerType[41];
 
+
+////////////////////////////////////////////////////////////
+///DFITCStayTimeType：停留时间数据类型
+////////////////////////////////////////////////////////////
+typedef int DFITCStayTimeType;
+
+
+////////////////////////////////////////////////////////////
+///DFITCComputeModeType：计算方式数据类型
+////////////////////////////////////////////////////////////
+typedef int DFITCComputeModeType;
+///绝对数值计算
+#define DFITC_ABSOLUTE_VALUE_COMPUTE        0
+///交易所保证金标准基础上浮动
+#define DFITC_EXCHANGE_MARGIN_BASIS_FLOAT   1 
+///交易所保证金结果基础上浮动
+#define DFITC_EXCHANGE_MARGIN_RESULT_FLOAT  2
+///期货保证金标准基础上浮动
+#define DFITC_FUTURES_MARGIN_BASIS_FLOAT    3
+
+
+/////////////////////////////////////////////////////////////////////////
+///DFITCPriceNoteType:期权保证金计算方式
+/////////////////////////////////////////////////////////////////////////
+typedef int DFITCPriceNoteType;
+///按照昨结算价计算
+#define DFITC_CALC_BY_PRESETTLEMENT        1
+///按照最新价计算
+#define DFITC_CALC_BY_LASTPRICE            2
+
+
+/////////////////////////////////////////////////////////////////////////
+///DFITCExchangeStatusType:交易所状态数据类型
+/////////////////////////////////////////////////////////////////////////
+typedef int DFITCExchangeStatusType;
+///开盘前
+#define DFITC_IS_BEFORETRADING     0
+///非交易
+#define DFITC_IS_NOTRADING         1
+///连续交易
+#define DFITC_IS_CONTINOUS         2
+///集合竞价报单
+#define DFITC_IS_AUCTIONORDERING   3
+///集合竞价价格平衡
+#define DFITC_IS_AUCTIONBALANCE    4
+///集合竞价撮合
+#define DFITC_IS_AUCTIONMATCH      5
+///收盘
+#define DFITC_IS_CLOSED            6
 
 
 #endif//DFITCAPIDATATYPE_H

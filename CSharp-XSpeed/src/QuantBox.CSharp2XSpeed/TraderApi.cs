@@ -38,8 +38,8 @@ namespace QuantBox.CSharp2XSpeed
         [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnCancelOrder")]
         public static extern void XSpeed_RegOnRtnCancelOrder(IntPtr pMsgQueue, fnOnRtnCancelOrder pCallback);
 
-        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnInstrumentStatus")]
-        public static extern void XSpeed_RegOnRtnInstrumentStatus(IntPtr pMsgQueue, fnOnRtnInstrumentStatus pCallback);
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnExchangeStatus")]
+        public static extern void XSpeed_RegOnRtnExchangeStatus(IntPtr pMsgQueue, fnOnRtnExchangeStatus pCallback);
 
         [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnMatchedInfo")]
         public static extern void XSpeed_RegOnRtnMatchedInfo(IntPtr pMsgQueue, fnOnRtnMatchedInfo pCallback);
@@ -53,17 +53,17 @@ namespace QuantBox.CSharp2XSpeed
         [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnQuoteSubscribe")]
         public static extern void XSpeed_RegOnRtnQuoteSubscribe(IntPtr pMsgQueue, fnOnRtnQuoteSubscribe pCallback);
 
-        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRspQuoteInsertOrder")]
-        public static extern void XSpeed_RegOnRspQuoteInsertOrder(IntPtr pMsgQueue, fnOnRspQuoteInsertCancelOrder pCallback);
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRspQuoteInsert")]
+        public static extern void XSpeed_RegOnRspQuoteInsert(IntPtr pMsgQueue, fnOnRspQuoteInsertCancel pCallback);
 
-        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRspQuoteCancelOrder")]
-        public static extern void XSpeed_RegOnRspQuoteCancelOrder(IntPtr pMsgQueue, fnOnRspQuoteInsertCancelOrder pCallback);
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRspQuoteCancel")]
+        public static extern void XSpeed_RegOnRspQuoteCancel(IntPtr pMsgQueue, fnOnRspQuoteInsertCancel pCallback);
 
-        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnQuoteCancelOrder")]
-        public static extern void XSpeed_RegOnRtnQuoteCancelOrder(IntPtr pMsgQueue, fnOnRtnQuoteCancelOrder pCallback);
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnQuoteCancel")]
+        public static extern void XSpeed_RegOnRtnQuoteCancel(IntPtr pMsgQueue, fnOnRtnQuoteCancel pCallback);
 
-        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnQuoteOrder")]
-        public static extern void XSpeed_RegOnRtnQuoteOrder(IntPtr pMsgQueue, fnOnRtnQuoteOrder pCallback);
+        [DllImport(CommApi.DllFileName, EntryPoint = "XSpeed_RegOnRtnQuote")]
+        public static extern void XSpeed_RegOnRtnQuote(IntPtr pMsgQueue, fnOnRtnQuote pCallback);
 
         [DllImport(CommApi.DllFileName, EntryPoint = "TD_CreateTdApi")]
         public static extern IntPtr TD_CreateTdApi();

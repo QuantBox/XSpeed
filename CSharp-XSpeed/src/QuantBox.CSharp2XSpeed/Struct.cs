@@ -12,7 +12,6 @@ namespace QuantBox.CSharp2XSpeed
         /// 请求ID
         /// </summary>
         public int lRequestID;
-
     };
 
     /// <summary>
@@ -84,6 +83,11 @@ namespace QuantBox.CSharp2XSpeed
         /// 请求ID
         /// </summary>
         public int lRequestID;
+        /// <summary>
+        /// 自定义类别
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string customCategory;
     };
 
     /// <summary>
@@ -142,11 +146,16 @@ namespace QuantBox.CSharp2XSpeed
         /// <summary>
         /// 手续费,该字段仅供下单时使用
         /// </summary>
-        public double poundage;
+        public double fee;
         /// <summary>
         /// 冻结保证金,该字段仅供下单时使用
         /// </summary>
         public double margin;
+        /// <summary>
+        /// 自定义类别
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string customCategory;
     };
 
     /// <summary>
@@ -216,11 +225,6 @@ namespace QuantBox.CSharp2XSpeed
         /// 合约类型
         /// </summary>
         public DFITCInstrumentTypeType instrumentType;
-        /// <summary>
-        /// 合约最后交易日
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
-        public string instrumentMaturity;
     };
 
     /// <summary>
@@ -351,13 +355,18 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         public DFITCInsertType insertType;
         /// <summary>
-        /// 预留字段1
+        /// 算法单编号
         /// </summary>
-        public int reservedType1;
+        public int extSpdOrderID;
         /// <summary>
         /// 预留字段2
         /// </summary>
         public int reservedType2;
+        /// <summary>
+        /// 自定义类别
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string customCategory;
     };
 
     /// <summary>
@@ -467,6 +476,15 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
         public string adjustmentInfo;
+        /// <summary>
+        /// 自定义类别
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string customCategory;
+        /// <summary>
+        /// 成交金额
+        /// </summary>
+        public double turnover;
     };
 
     /// <summary>
@@ -546,6 +564,14 @@ namespace QuantBox.CSharp2XSpeed
         /// 委托数量
         /// </summary>
         public int orderAmount;
+        /// <summary>
+        /// 保证金
+        /// </summary>
+        public double margin;
+        /// <summary>
+        /// 手续费
+        /// </summary>
+        public double fee;
     };
 
     /// <summary>
@@ -657,6 +683,18 @@ namespace QuantBox.CSharp2XSpeed
         /// 期权市值
         /// </summary>
         public double optMarketValue;
+        /// <summary>
+        /// 浮动盈亏
+        /// </summary>
+        public double floatProfitLoss;
+        /// <summary>
+        /// 总出金
+        /// </summary>
+        public double totFundOut;
+        /// <summary>
+        /// 总入金
+        /// </summary>
+        public double totFundIn;
     };
 
     /// <summary>
@@ -757,7 +795,7 @@ namespace QuantBox.CSharp2XSpeed
         /// <summary>
         /// 昨结算价
         /// </summary>
-        public double lastPrice;
+        public double preSettlementPrice;
         /// <summary>
         /// 合约类型
         /// </summary>
@@ -996,6 +1034,30 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
         public string instrumentMaturity;
+        /// <summary>
+        /// 涨停板价
+        /// </summary>
+        public double upperLimitPrice;
+        /// <summary>
+        /// 跌停板价
+        /// </summary>
+        public double lowerLimitPrice;
+        /// <summary>
+        /// 昨收盘
+        /// </summary>
+        public double preClosePrice;
+        /// <summary>
+        /// 昨结算价
+        /// </summary>
+        public double preSettlementPrice;
+        /// <summary>
+        /// 结算价
+        /// </summary>
+        public double settlementPrice;
+        /// <summary>
+        /// 昨持仓量
+        /// </summary>
+        public double preOpenInterest;
     };
 
     /// <summary>
@@ -1017,6 +1079,11 @@ namespace QuantBox.CSharp2XSpeed
         /// 合约类型
         /// </summary>
         public DFITCInstrumentTypeType instrumentType;
+        /// <summary>
+        /// 自定义类别
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string customCategory;
     };
 
     /// <summary>
@@ -1038,6 +1105,11 @@ namespace QuantBox.CSharp2XSpeed
         /// 合约类型
         /// </summary>
         public DFITCInstrumentTypeType instrumentType;
+        /// <summary>
+        /// 自定义类别
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string customCategory;
     };
 
     /// <summary>
@@ -1145,7 +1217,25 @@ namespace QuantBox.CSharp2XSpeed
         /// 报单编号
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public int OrderSysID;
+        public string OrderSysID;
+        /// <summary>
+        /// 自定义类别
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string customCategory;
+        /// <summary>
+        /// 保证金
+        /// </summary>
+        public double margin;
+        /// <summary>
+        /// 手续费
+        /// </summary>
+        public double fee;
+        /// <summary>
+        /// 本地委托号
+        /// </summary>
+        public int localOrderID;
+
     };
 
     /// <summary>
@@ -1232,6 +1322,15 @@ namespace QuantBox.CSharp2XSpeed
         /// 预留字段2
         /// </summary>
         public int reservedType2;
+        /// <summary>
+        /// 自定义类别
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string customCategory;
+        /// <summary>
+        /// 手续费
+        /// </summary>
+        public double fee;
     };
 
     /// <summary>
@@ -1302,6 +1401,38 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
         public string instrumentMaturity;
+        /// <summary>
+        /// 涨停板价
+        /// </summary>
+        public double upperLimitPrice;
+        /// <summary>
+        /// 跌停板价
+        /// </summary>
+        public double lowerLimitPrice;
+        /// <summary>
+        /// 昨收盘
+        /// </summary>
+        public double preClosePrice;
+        /// <summary>
+        /// 昨结算价
+        /// </summary>
+        public double preSettlementPrice;
+        /// <summary>
+        /// 结算价
+        /// </summary>
+        public double settlementPrice;
+        /// <summary>
+        /// 昨持仓量
+        /// </summary>
+        public double preOpenInterest;
+        /// <summary>
+        /// 期权：行权按比例 期货：交割按比例
+        /// </summary>
+        public double optExecRatio;
+        /// <summary>
+        /// 期权：行权按定额 期货：交割按定额
+        /// </summary>
+        public double optExecRatioPerVol;
     };
 
     /// <summary>
@@ -1495,6 +1626,44 @@ namespace QuantBox.CSharp2XSpeed
     };
 
     /// <summary>
+    /// 自定义组合行情
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DFITCCustomMarketDataField
+    {
+        /// <summary>
+        /// 合约代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string InstrumentID;
+        /// <summary>
+        /// 交易所代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string ExchangeID;
+        /// <summary>
+        /// 申买量一
+        /// </summary>
+        public int BidVolume1;
+        /// <summary>
+        /// 申买价一
+        /// </summary>
+        public double BidPrice1;
+        /// <summary>
+        /// 申卖量一
+        /// </summary>
+        public int AskVolume1;
+        /// <summary>
+        /// 申卖价一
+        /// </summary>
+        public double AskPrice1;
+        /// <summary>
+        /// 最新价
+        /// </summary>
+        public double LastPrice;
+    };
+
+    /// <summary>
     /// 查询持仓明细
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
@@ -1596,11 +1765,20 @@ namespace QuantBox.CSharp2XSpeed
         /// <summary>
         /// 昨结算价
         /// </summary>
-        public double lastPrice;
+        public double preSettlementPrice;
         /// <summary>
         /// 合约类型
         /// </summary>
         public DFITCInstrumentTypeType instrumentType;
+        /// <summary>
+        /// 柜台委托号
+        /// </summary>
+        public int spdOrderID;
+        /// <summary>
+        /// 自定义类别
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string customCategory;
     };
 
     /// <summary>
@@ -1635,38 +1813,55 @@ namespace QuantBox.CSharp2XSpeed
     };
 
     /// <summary>
-    /// 合约交易状态通知信息
+    /// 交易状态查询请求
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct DFITCInstrumentStatusField
+    public struct DFITCQryExchangeStatusField
+    {
+        /// <summary>
+        /// 请求ID
+        /// </summary>
+        public int lRequestID;
+        /// <summary>
+        /// 交易所代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string exchangeID;
+    };
+
+    /// <summary>
+    /// 交易所状态查询响应
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DFITCExchangeStatusRspField
+    {
+        /// <summary>
+        /// 请求ID
+        /// </summary>
+        public int lRequestID;
+        /// <summary>
+        /// 交易所代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string exchangeID;
+    };
+
+
+    /// <summary>
+    /// 交易所状态通知
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DFITCExchangeStatusRtnField
     {
         /// <summary>
         /// 交易所代码
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
-        public string ExchangeID;
+        public string exchangeID;
         /// <summary>
-        /// 合约代码
+        /// 交易所状态
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string InstrumentID;
-        /// <summary>
-        /// 合约交易状态
-        /// </summary>
-        public int InstrumentStatus;
-        /// <summary>
-        /// 交易阶段编号
-        /// </summary>
-        public int TradingSegmentSN;
-        /// <summary>
-        /// 进入本状态时间
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-        public string EnterTime;
-        /// <summary>
-        /// 进入本状态原因
-        /// </summary>
-        public short EnterReason;
+        public DFITCExchangeStatusType exchangeStatus;
     };
 
     /// <summary>
@@ -1680,6 +1875,19 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
         public string accountID;
+        /// <summary>
+        /// 请求ID
+        /// </summary>
+        public int lRequestID;
+        /// <summary>
+        /// 交易所代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string exchangeID;
+        /// <summary>
+        /// 合约类型
+        /// </summary>
+        public DFITCInstrumentTypeType instrumentType;
     };
 
     /// <summary>
@@ -1692,6 +1900,10 @@ namespace QuantBox.CSharp2XSpeed
         /// 订阅状态
         /// </summary>
         public DFITCSubscribeFlagType subscribeFlag;
+        /// <summary>
+        /// 请求ID
+        /// </summary>
+        public int lRequestID;
     };
 
     /// <summary>
@@ -1716,10 +1928,6 @@ namespace QuantBox.CSharp2XSpeed
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
         public string InstrumentID;
         /// <summary>
-        /// 合约类型
-        /// </summary>
-        public DFITCInstrumentTypeType instrumentType;
-        /// <summary>
         /// 买卖标志（0买，1卖，2所有）
         /// </summary>
         [MarshalAs(UnmanagedType.I2)]
@@ -1729,13 +1937,38 @@ namespace QuantBox.CSharp2XSpeed
         /// </summary>
         [MarshalAs(UnmanagedType.I2)]
         public DFITCSourceType source;
+        /// <summary>
+        /// 交易编码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string clientID;
+        /// <summary>
+        /// 席位代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 33)]
+        public string seatCode;
+        /// <summary>
+        /// 交易日期
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string tradingDate;
+        /// <summary>
+        /// 询价时间
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string quoteTime;
+        /// <summary>
+        /// 询价接收时间
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        public string quoteRecvTime;
     };
 
     /// <summary>
     /// 做市商报单请求
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct DFITCQuoteInsertOrderField
+    public struct DFITCQuoteInsertField
     {
         /// <summary>
         /// 资金账户ID
@@ -1815,7 +2048,7 @@ namespace QuantBox.CSharp2XSpeed
     /// 做市商报单响应
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct DFITCQuoteOrderRspField
+    public struct DFITCQuoteRspField
     {
         /// <summary>
         /// 本地委托号
@@ -1832,7 +2065,7 @@ namespace QuantBox.CSharp2XSpeed
         /// <summary>
         /// 双边手续费之和
         /// </summary>
-        public double poundage;
+        public double fee;
         /// <summary>
         /// 双边保证金之和
         /// </summary>
@@ -1849,7 +2082,7 @@ namespace QuantBox.CSharp2XSpeed
     /// 做市商报单回报
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct DFITCQuoteOrderRtnField
+    public struct DFITCQuoteRtnField
     {
         /// <summary>
         /// 交易所编码
@@ -1963,7 +2196,7 @@ namespace QuantBox.CSharp2XSpeed
         /// <summary>
         /// 解冻手续费
         /// </summary>
-        public double poundage;
+        public double fee;
         /// <summary>
         /// 解冻保证金
         /// </summary>
@@ -2061,13 +2294,14 @@ namespace QuantBox.CSharp2XSpeed
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
         public string accountID;
         /// <summary>
-        /// 解冻手续费
-        /// </summary>
-        public double poundage;
-        /// <summary>
         /// 解冻保证金
         /// </summary>
         public double margin;
+        /// <summary>
+        /// 解冻手续费
+        /// </summary>
+        public double fee;
+
     };
 }
 /*

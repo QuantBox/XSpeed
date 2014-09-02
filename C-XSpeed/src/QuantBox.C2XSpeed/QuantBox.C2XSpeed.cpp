@@ -158,7 +158,7 @@ QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnCancelOrder(void* pMsgQueue,f
 	}
 }
 
-QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnInstrumentStatus(void* pMsgQueue,fnOnRtnInstrumentStatus pCallback)
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnExchangeStatus(void* pMsgQueue, fnOnRtnExchangeStatus pCallback)
 {
 	if(pMsgQueue)
 	{
@@ -198,23 +198,23 @@ QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteSubscribe(void* pMsgQueu
 	}
 }
 
-QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteInsertOrder(void* pMsgQueue,fnOnRspQuoteInsertCancelOrder pCallback)
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteInsertOrder(void* pMsgQueue,fnOnRspQuoteInsertCancel pCallback)
 {
 	if(pMsgQueue)
 	{
-		XSpeed_GetQueue(pMsgQueue)->RegisterCallback_OnRspQuoteInsertOrder(pCallback);
+		XSpeed_GetQueue(pMsgQueue)->RegisterCallback_OnRspQuoteInsert(pCallback);
 	}
 }
 
-QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteCancelOrder(void* pMsgQueue,fnOnRspQuoteInsertCancelOrder pCallback)
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteCancel(void* pMsgQueue,fnOnRspQuoteInsertCancel pCallback)
 {
 	if(pMsgQueue)
 	{
-		XSpeed_GetQueue(pMsgQueue)->RegisterCallback_OnRspQuoteCancelOrder(pCallback);
+		XSpeed_GetQueue(pMsgQueue)->RegisterCallback_OnRspQuoteCancel(pCallback);
 	}
 }
 
-QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteCancelOrder(void* pMsgQueue,fnOnRtnQuoteCancelOrder pCallback)
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteCancel(void* pMsgQueue,fnOnRtnQuoteCancel pCallback)
 {
 	if(pMsgQueue)
 	{
@@ -222,7 +222,7 @@ QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteCancelOrder(void* pMsgQu
 	}
 }
 
-QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteOrder(void* pMsgQueue,fnOnRtnQuoteOrder pCallback)
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuote(void* pMsgQueue,fnOnRtnQuote pCallback)
 {
 	if(pMsgQueue)
 	{
@@ -422,7 +422,7 @@ QUANTBOXC2XSPEED_API int __stdcall TD_SendQuoteOrder(
 	if(pTraderApi
 		&&szInstrumentId)
 	{
-		return TD_GetApi(pTraderApi)->ReqQuoteInsertOrder(
+		return TD_GetApi(pTraderApi)->ReqQuoteInsert(
 			localOrderID,
 			szInstrumentId,
 			quoteID,

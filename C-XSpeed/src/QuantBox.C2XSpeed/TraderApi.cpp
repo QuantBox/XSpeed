@@ -161,10 +161,10 @@ CTraderApi::SRequest* CTraderApi::MakeRequestBuf(RequestType type)
 	case E_QuoteSubscribeField:
 		pRequest->pBuf = new DFITCQuoteSubscribeField();
 		break;
-	case E_QuoteInsertOrderField:
-		pRequest->pBuf = new DFITCQuoteInsertOrderField();
+	case E_QuoteInsertField:
+		pRequest->pBuf = new DFITCQuoteInsertField();
 		break;
-	case E_QuoteCancelOrderField:
+	case E_QuoteCancelField:
 		pRequest->pBuf = new DFITCCancelOrderField();
 		break;
 	default:
@@ -546,15 +546,15 @@ void CTraderApi::OnRspInsertOrder(struct DFITCOrderRspDataRtnField * pOrderRtn, 
 		m_msgQueue->Input_OnRspInsertOrder(this,pOrderRtn,pErrorInfo);
 }
 
-void CTraderApi::OnRspQuoteInsertOrder(struct DFITCQuoteOrderRspField * pRspQuoteOrderData, struct DFITCErrorRtnField * pErrorInfo)
+void CTraderApi::OnRspQuoteInsert(struct DFITCQuoteRspField * pRspQuoteData, struct DFITCErrorRtnField * pErrorInfo)
 {
 	if (pErrorInfo)
 		WriteLog("OnRspQuoteInsertOrder localOrderID=%d   spdOrderID =%d  pErrorInfo=%s",pErrorInfo->localOrderID , pErrorInfo->spdOrderID, pErrorInfo->errorMsg);
 	else
-		WriteLog("OnRspQuoteInsertOrder localOrderID=%d   spdOrderID =%d  ",pRspQuoteOrderData->localOrderID , pRspQuoteOrderData->spdOrderID);
+		WriteLog("OnRspQuoteInsertOrder localOrderID=%d   spdOrderID =%d  ", pRspQuoteData->localOrderID, pRspQuoteData->spdOrderID);
 
 	if(m_msgQueue)
-		m_msgQueue->Input_OnRspQuoteInsertOrder(this,pRspQuoteOrderData,pErrorInfo);
+		m_msgQueue->Input_OnRspQuoteInsert(this, pRspQuoteData, pErrorInfo);
 }
 
 void CTraderApi::OnRtnMatchedInfo(struct DFITCMatchRtnField * pRtnMatchData)
@@ -606,7 +606,7 @@ void CTraderApi::ReqQuoteCancelOrder(
 	if (NULL == m_pApi)
 		return;
 
-	SRequest* pRequest = MakeRequestBuf(E_QuoteCancelOrderField);
+	SRequest* pRequest = MakeRequestBuf(E_QuoteCancelField);
 	if (NULL == pRequest)
 		return;
 
@@ -619,7 +619,7 @@ void CTraderApi::ReqQuoteCancelOrder(
 	body->localOrderID = localOrderID;
 	body->spdOrderID = spdOrderID;
 	
-	m_pApi->ReqQuoteCancelOrder(body);
+	m_pApi->ReqQuoteCancel(body);
 
 	delete pRequest->pBuf;
 	delete pRequest;//用完后直接删除
@@ -636,7 +636,7 @@ void CTraderApi::OnRspCancelOrder(struct DFITCOrderRspDataRtnField *pOrderCancel
 		m_msgQueue->Input_OnRspCancelOrder(this,pOrderCanceledRtn,pErrorInfo);
 }
 
-void CTraderApi::OnRspQuoteCancelOrder( struct DFITCQuoteOrderRspField * pRspQuoteCanceledData,struct DFITCErrorRtnField * pErrorInfo)
+void CTraderApi::OnRspQuoteCancel( struct DFITCQuoteRspField * pRspQuoteCanceledData,struct DFITCErrorRtnField * pErrorInfo)
 {
 	if (pErrorInfo)
 	WriteLog("OnRspQuoteCancelOrder localOrderID=%d   spdOrderID =%d  pErrorInfo=%s ",pErrorInfo->localOrderID , pErrorInfo->spdOrderID, pErrorInfo->errorMsg);
@@ -644,7 +644,7 @@ void CTraderApi::OnRspQuoteCancelOrder( struct DFITCQuoteOrderRspField * pRspQuo
 	   WriteLog("OnRspQuoteCancelOrder localOrderID=%d   spdOrderID =%d  ",pRspQuoteCanceledData->localOrderID , pRspQuoteCanceledData->spdOrderID);
 
 	if(m_msgQueue)
-		m_msgQueue->Input_OnRspQuoteCancelOrder(this,pRspQuoteCanceledData,pErrorInfo);
+		m_msgQueue->Input_OnRspQuoteCancel(this,pRspQuoteCanceledData,pErrorInfo);
 }
 
 void CTraderApi::OnRtnCancelOrder(struct DFITCOrderCanceledRtnField * pCancelOrderData)
@@ -654,11 +654,11 @@ void CTraderApi::OnRtnCancelOrder(struct DFITCOrderCanceledRtnField * pCancelOrd
 		m_msgQueue->Input_OnRtnCancelOrder(this,pCancelOrderData);
 }
 
-void CTraderApi::OnRtnQuoteCancelOrder(struct DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData)
+void CTraderApi::OnRtnQuoteCancel(struct DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData)
 {
 	WriteLog("OnRtnQuoteCancelOrder localOrderID=%d   spdOrderID =%d  DFITCAmountType=%d  ",pRtnQuoteCanceledData->localOrderID , pRtnQuoteCanceledData->spdOrderID, pRtnQuoteCanceledData->bAmount);
 	if(m_msgQueue)
-		m_msgQueue->Input_OnRtnQuoteCancelOrder(this,pRtnQuoteCanceledData);
+		m_msgQueue->Input_OnRtnQuoteCancel(this,pRtnQuoteCanceledData);
 }
 
 void CTraderApi::OnRtnOrder(struct DFITCOrderRtnField * pRtnOrderData)
@@ -668,11 +668,11 @@ void CTraderApi::OnRtnOrder(struct DFITCOrderRtnField * pRtnOrderData)
 		m_msgQueue->Input_OnRtnOrder(this,pRtnOrderData);
 }
 
-void CTraderApi::OnRtnQuoteOrder(struct DFITCQuoteOrderRtnField * pRtnQuoteOrderData)
+void CTraderApi::OnRtnQuote(struct DFITCQuoteRtnField * pRtnQuoteData)
 {
-	WriteLog("OnRtnQuoteOrder localOrderID=%d   spdOrderID =%d  OrderSysID=%s  ",pRtnQuoteOrderData->localOrderID , pRtnQuoteOrderData->spdOrderID, pRtnQuoteOrderData->bOrderSysID);
+	WriteLog("OnRtnQuoteOrder localOrderID=%d   spdOrderID =%d  OrderSysID=%s  ", pRtnQuoteData->localOrderID, pRtnQuoteData->spdOrderID, pRtnQuoteData->bOrderSysID);
 	if(m_msgQueue)
-		m_msgQueue->Input_OnRtnQuoteOrder(this,pRtnQuoteOrderData);
+		m_msgQueue->Input_OnRtnQuote(this, pRtnQuoteData);
 }
 
 void CTraderApi::ReqQryCustomerCapital()
@@ -901,10 +901,10 @@ void CTraderApi::OnRspQryMatchInfo(struct DFITCMatchedRtnField * pRtnMatchData, 
 		ReleaseRequestMapBuf(pErrorInfo->requestID);
 }
 
-void CTraderApi::OnRtnInstrumentStatus(DFITCInstrumentStatusField *pInstrumentStatus)
+void CTraderApi::OnRtnExchangeStatus(DFITCExchangeStatusRtnField * pRtnExchangeStatusData)
 {
 	if(m_msgQueue)
-		m_msgQueue->Input_OnRtnInstrumentStatus(this,pInstrumentStatus);
+		m_msgQueue->Input_OnRtnExchangeStatus(this, pRtnExchangeStatusData);
 }
 
 void CTraderApi::ReqQuoteSubscribe()
@@ -935,7 +935,7 @@ void CTraderApi::OnRtnQuoteSubscribe(struct DFITCQuoteSubscribeRtnField * pRtnQu
 		m_msgQueue->Input_OnRtnQuoteSubscribe(this,pRtnQuoteSubscribeData);
 }
 
-long CTraderApi::ReqQuoteInsertOrder(
+long CTraderApi::ReqQuoteInsert(
 	long localOrderID,
 	const string& szInstrumentId,
 	const string& quoteID,
@@ -956,11 +956,11 @@ long CTraderApi::ReqQuoteInsertOrder(
 
 	//WriteLog("ReqQuoteInsertOrder localOrderID=%d  szInstrumentId=%s lAmount=%d dbPrice=%f orderType=%s ",localOrderID ,szInstrumentId.c_str(),lAmount,dbPrice,orderType==DFITC_LIMITORDER?"限价":"市价");
 
-	SRequest* pRequest = MakeRequestBuf(E_QuoteInsertOrderField);
+	SRequest* pRequest = MakeRequestBuf(E_QuoteInsertField);
 	if (NULL == pRequest)
 		return 0;
 
-	DFITCQuoteInsertOrderField* body = (DFITCQuoteInsertOrderField*)pRequest->pBuf;
+	DFITCQuoteInsertField* body = (DFITCQuoteInsertField*)pRequest->pBuf;
 
 	strncpy(body->accountID, m_szAccountID.c_str(),sizeof(DFITCAccountIDType));
 	// 合约
@@ -971,8 +971,8 @@ long CTraderApi::ReqQuoteInsertOrder(
 	// 数量
 	body->bOrderAmount = bOrderAmount;
 	body->sOrderAmount = sOrderAmount;
-	// 买卖
-	body->buySellType = DFITC_SPD_ALL;
+	//// 买卖
+	//body->buySellType = DFITC_SPD_ALL;
 	// 开平
 	body->bOpenCloseType = bOpenCloseType;
 	body->sOpenCloseType = sOpenCloseType;
@@ -1004,7 +1004,7 @@ long CTraderApi::ReqQuoteInsertOrder(
 		{
 			body->localOrderID = localOrderID;
 		}
-		int n = m_pApi->ReqQuoteInsertOrder((DFITCQuoteInsertOrderField*)pRequest->pBuf);
+		int n = m_pApi->ReqQuoteInsert((DFITCQuoteInsertField*)pRequest->pBuf);
 		nRet = body->localOrderID;
 	}
 	delete pRequest->pBuf;

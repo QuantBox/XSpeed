@@ -32,8 +32,8 @@ class CTraderApi :
 		E_SpecificInstrumentField,
 		E_UserLoginField,
 		E_QuoteSubscribeField,
-		E_QuoteInsertOrderField,
-		E_QuoteCancelOrderField,
+		E_QuoteInsertField,
+		E_QuoteCancelField,
 	};
 
 	//请求数据包结构体
@@ -72,7 +72,7 @@ public:
 		DFITCLocalOrderIDType localOrderID,
 		DFITCSPDOrderIDType spdOrderID);
 
-	long ReqQuoteInsertOrder(
+	long ReqQuoteInsert(
 			long localOrderID,
 			const string& szInstrumentId,
 			const string& quoteID,
@@ -163,7 +163,7 @@ private:
 
 	////其它
 	virtual void OnRtnErrorMsg( struct DFITCErrorRtnField *pErrorInfo );
-	virtual void OnRtnInstrumentStatus(DFITCInstrumentStatusField *pInstrumentStatus);
+	virtual void OnRtnExchangeStatus(struct DFITCExchangeStatusRtnField * pRtnExchangeStatusData);
     
 	virtual void OnRspResetPassword(struct DFITCResetPwdRspField * pResetPassword, struct DFITCErrorRtnField * pErrorInfo);
     virtual void OnRspQryTradeCode(struct DFITCQryTradeCodeRtnField * pTradeCode, struct DFITCErrorRtnField * pErrorInfo, bool bIsLast);
@@ -176,10 +176,10 @@ private:
 	// 做市商
 	virtual void OnRspQuoteSubscribe(struct DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData);
 	virtual void OnRtnQuoteSubscribe(struct DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData);
-	virtual void OnRspQuoteInsertOrder(struct DFITCQuoteOrderRspField * pRspQuoteOrderData, struct DFITCErrorRtnField * pErrorInfo);
-	virtual void OnRtnQuoteOrder(struct DFITCQuoteOrderRtnField * pRtnQuoteOrderData);
-	virtual void OnRspQuoteCancelOrder( struct DFITCQuoteOrderRspField * pRspQuoteCanceledData,struct DFITCErrorRtnField * pErrorInfo);
-	virtual void OnRtnQuoteCancelOrder(struct DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData);   
+	virtual void OnRspQuoteInsert(struct DFITCQuoteRspField * pRspQuoteData, struct DFITCErrorRtnField * pErrorInfo);
+	virtual void OnRtnQuote(struct DFITCQuoteRtnField * pRtnQuoteData);
+	virtual void OnRspQuoteCancel( struct DFITCQuoteRspField * pRspQuoteCanceledData,struct DFITCErrorRtnField * pErrorInfo);
+	virtual void OnRtnQuoteCancel(struct DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData);
 
 private:
 	ConnectionStatus			m_status;				//连接状态

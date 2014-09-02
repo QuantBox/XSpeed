@@ -23,16 +23,16 @@ class CXSpeedMsgQueue
 		E_fnOnRspQryPositionDetail,
 		E_fnOnRspQrySpecifyInstrument,
 		E_fnOnRtnCancelOrder,
-		E_fnOnRtnInstrumentStatus,
+		E_fnOnRtnExchangeStatus,
 		E_fnOnRtnMatchedInfo,
 		E_fnOnRtnOrder,
 
 		E_fnOnRspQuoteSubscribe,
 		E_fnOnRtnQuoteSubscribe,
-		E_fnOnRspQuoteInsertOrder,
-		E_fnOnRspQuoteCancelOrder,
-		E_fnOnRtnQuoteCancelOrder,
-		E_fnOnRtnQuoteOrder,
+		E_fnOnRspQuoteInsert,
+		E_fnOnRspQuoteCancel,
+		E_fnOnRtnQuoteCancel,
+		E_fnOnRtnQuote,
 	};
 
 	struct SMsgItem
@@ -66,16 +66,16 @@ public:
 		m_fnOnRspQryPositionDetail = NULL;				
 		m_fnOnRspQrySpecifyInstrument = NULL;
 		m_fnOnRtnCancelOrder = NULL;
-		m_fnOnRtnInstrumentStatus = NULL;
+		m_fnOnRtnExchangeStatus = NULL;
 		m_fnOnRtnMatchedInfo = NULL;
 		m_fnOnRtnOrder = NULL;
 
 		m_fnOnRspQuoteSubscribe = NULL;
 		m_fnOnRtnQuoteSubscribe = NULL;
-		m_fnOnRspQuoteInsertOrder = NULL;
-		m_fnOnRspQuoteCancelOrder = NULL;
-		m_fnOnRtnQuoteCancelOrder = NULL;
-		m_fnOnRtnQuoteOrder = NULL;
+		m_fnOnRspQuoteInsert = NULL;
+		m_fnOnRspQuoteCancel = NULL;
+		m_fnOnRtnQuoteCancel = NULL;
+		m_fnOnRtnQuote = NULL;
 		
 		m_hEvent = CreateEvent(NULL,FALSE,FALSE,NULL);
 	}
@@ -114,15 +114,15 @@ public:
 	void RegisterCallback(fnOnRspQryPositionDetail pCallback){m_fnOnRspQryPositionDetail = pCallback;}
 	void RegisterCallback(fnOnRspQrySpecifyInstrument pCallback){m_fnOnRspQrySpecifyInstrument = pCallback;}
 	void RegisterCallback(fnOnRtnCancelOrder pCallback){m_fnOnRtnCancelOrder = pCallback;}
-	void RegisterCallback(fnOnRtnInstrumentStatus pCallback){m_fnOnRtnInstrumentStatus = pCallback;}
+	void RegisterCallback(fnOnRtnExchangeStatus pCallback){ m_fnOnRtnExchangeStatus = pCallback; }
 	void RegisterCallback(fnOnRtnMatchedInfo pCallback){m_fnOnRtnMatchedInfo = pCallback;}
 	void RegisterCallback(fnOnRtnOrder pCallback){m_fnOnRtnOrder = pCallback;}
 	void RegisterCallback(fnOnRspQuoteSubscribe pCallback){m_fnOnRspQuoteSubscribe = pCallback;}
 	void RegisterCallback(fnOnRtnQuoteSubscribe pCallback){m_fnOnRtnQuoteSubscribe = pCallback;}
-	void RegisterCallback_OnRspQuoteInsertOrder(fnOnRspQuoteInsertCancelOrder pCallback){m_fnOnRspQuoteInsertOrder = pCallback;}
-	void RegisterCallback_OnRspQuoteCancelOrder(fnOnRspQuoteInsertCancelOrder pCallback){m_fnOnRspQuoteCancelOrder = pCallback;}
-	void RegisterCallback(fnOnRtnQuoteCancelOrder pCallback){m_fnOnRtnQuoteCancelOrder = pCallback;}
-	void RegisterCallback(fnOnRtnQuoteOrder pCallback){m_fnOnRtnQuoteOrder = pCallback;}
+	void RegisterCallback_OnRspQuoteInsert(fnOnRspQuoteInsertCancel pCallback){m_fnOnRspQuoteInsert = pCallback;}
+	void RegisterCallback_OnRspQuoteCancel(fnOnRspQuoteInsertCancel pCallback){m_fnOnRspQuoteCancel = pCallback;}
+	void RegisterCallback(fnOnRtnQuoteCancel pCallback){m_fnOnRtnQuoteCancel = pCallback;}
+	void RegisterCallback(fnOnRtnQuote pCallback){m_fnOnRtnQuote = pCallback;}
 
 
 	//响应结果处理后入队列(按字母排序)
@@ -141,16 +141,16 @@ public:
 	void Input_OnRspCustomerCapital(void* pTraderApi,DFITCCapitalInfoRtnField *pCapitalInfoRtn,DFITCErrorRtnField *pErrorInfo, bool bIsLast);
 	void Input_OnMarketData(void* pMdApi,DFITCDepthMarketDataField *pMarketDataField);
 	void Input_OnRtnCancelOrder(void* pTraderApi,DFITCOrderCanceledRtnField * pCancelOrderData);
-	void Input_OnRtnInstrumentStatus(void* pTraderApi,DFITCInstrumentStatusField *pInstrumentStatus);
+	void Input_OnRtnExchangeStatus(void* pTraderApi, struct DFITCExchangeStatusRtnField * pRtnExchangeStatusData);
 	void Input_OnRtnOrder(void* pTraderApi,DFITCOrderRtnField * pRtnOrderData);
 	void Input_OnRtnMatchedInfo(void* pTraderApi,DFITCMatchRtnField * pRtnMatchData);
 
 	void Input_OnRspQuoteSubscribe(void* pTraderApi,DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData);
 	void Input_OnRtnQuoteSubscribe(void* pTraderApi,DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData);
-	void Input_OnRspQuoteInsertOrder(void* pTraderApi,DFITCQuoteOrderRspField * pRspQuoteOrderData,DFITCErrorRtnField * pErrorInfo);
-	void Input_OnRspQuoteCancelOrder(void* pTraderApi,DFITCQuoteOrderRspField * pRspQuoteOrderData,DFITCErrorRtnField * pErrorInfo);
-	void Input_OnRtnQuoteOrder(void* pTraderApi,DFITCQuoteOrderRtnField * pRtnQuoteOrderData);
-	void Input_OnRtnQuoteCancelOrder(void* pTraderApi,DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData);
+	void Input_OnRspQuoteInsert(void* pTraderApi,DFITCQuoteRspField * pRspQuoteData,DFITCErrorRtnField * pErrorInfo);
+	void Input_OnRspQuoteCancel(void* pTraderApi,DFITCQuoteRspField * pRspQuoteData,DFITCErrorRtnField * pErrorInfo);
+	void Input_OnRtnQuote(void* pTraderApi,DFITCQuoteRtnField * pRtnQuoteData);
+	void Input_OnRtnQuoteCancel(void* pTraderApi,DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData);
 private:
 	friend DWORD WINAPI ProcessThread(LPVOID lpParam);
 	void RunInThread();
@@ -238,10 +238,10 @@ private:
 		if(m_fnOnMarketData)
 			(*m_fnOnMarketData)(pItem->pApi,(DFITCDepthMarketDataField*)pItem->pBuf);
 	}
-	void Output_OnRtnInstrumentStatus(SMsgItem* pItem)
+	void Output_OnRtnExchangeStatus(SMsgItem* pItem)
 	{
-		if(m_fnOnRtnInstrumentStatus)
-			(*m_fnOnRtnInstrumentStatus)(pItem->pApi,(DFITCInstrumentStatusField*)pItem->pBuf);
+		if (m_fnOnRtnExchangeStatus)
+			(*m_fnOnRtnExchangeStatus)(pItem->pApi, (DFITCExchangeStatusRtnField*)pItem->pBuf);
 	}
 	void Output_OnRtnOrder(SMsgItem* pItem)
 	{
@@ -264,25 +264,25 @@ private:
 		if(m_fnOnRtnQuoteSubscribe)
 			(*m_fnOnRtnQuoteSubscribe)(pItem->pApi,(DFITCQuoteSubscribeRtnField*)pItem->pBuf);
 	}
-	void Output_OnRspQuoteInsertOrder(SMsgItem* pItem)
+	void Output_OnRspQuoteInsert(SMsgItem* pItem)
 	{
-		if(m_fnOnRspQuoteInsertOrder)
-			(*m_fnOnRspQuoteInsertOrder)(pItem->pApi,(DFITCQuoteOrderRspField*)pItem->pBuf,&pItem->RspInfo);
+		if(m_fnOnRspQuoteInsert)
+			(*m_fnOnRspQuoteInsert)(pItem->pApi,(DFITCQuoteRspField*)pItem->pBuf,&pItem->RspInfo);
 	}
-	void Output_OnRspQuoteCancelOrder(SMsgItem* pItem)
+	void Output_OnRspQuoteCancel(SMsgItem* pItem)
 	{
-		if(m_fnOnRspQuoteCancelOrder)
-			(*m_fnOnRspQuoteCancelOrder)(pItem->pApi,(DFITCQuoteOrderRspField*)pItem->pBuf,&pItem->RspInfo);
+		if(m_fnOnRspQuoteCancel)
+			(*m_fnOnRspQuoteCancel)(pItem->pApi,(DFITCQuoteRspField*)pItem->pBuf,&pItem->RspInfo);
 	}
-	void Output_OnRtnQuoteOrder(SMsgItem* pItem)
+	void Output_OnRtnQuote(SMsgItem* pItem)
 	{
-		if(m_fnOnRtnQuoteOrder)
-			(*m_fnOnRtnQuoteOrder)(pItem->pApi,(DFITCQuoteOrderRtnField*)pItem->pBuf);
+		if(m_fnOnRtnQuote)
+			(*m_fnOnRtnQuote)(pItem->pApi,(DFITCQuoteRtnField*)pItem->pBuf);
 	}
-	void Output_OnRtnQuoteCancelOrder(SMsgItem* pItem)
+	void Output_OnRtnQuoteCancel(SMsgItem* pItem)
 	{
-		if(m_fnOnRtnQuoteCancelOrder)
-			(*m_fnOnRtnQuoteCancelOrder)(pItem->pApi,(DFITCQuoteCanceledRtnField*)pItem->pBuf);
+		if(m_fnOnRtnQuoteCancel)
+			(*m_fnOnRtnQuoteCancel)(pItem->pApi,(DFITCQuoteCanceledRtnField*)pItem->pBuf);
 	}
 
 private:
@@ -309,15 +309,15 @@ private:
 	fnOnRspQryPositionDetail		m_fnOnRspQryPositionDetail;
 	fnOnRspQrySpecifyInstrument		m_fnOnRspQrySpecifyInstrument;
 	fnOnRtnCancelOrder				m_fnOnRtnCancelOrder;
-	fnOnRtnInstrumentStatus			m_fnOnRtnInstrumentStatus;
+	fnOnRtnExchangeStatus			m_fnOnRtnExchangeStatus;
 	fnOnRtnMatchedInfo				m_fnOnRtnMatchedInfo;	
 	fnOnRtnOrder					m_fnOnRtnOrder;
 
 	fnOnRspQuoteSubscribe			m_fnOnRspQuoteSubscribe;
 	fnOnRtnQuoteSubscribe			m_fnOnRtnQuoteSubscribe;
-	fnOnRspQuoteInsertCancelOrder	m_fnOnRspQuoteInsertOrder;
-	fnOnRspQuoteInsertCancelOrder	m_fnOnRspQuoteCancelOrder;
-	fnOnRtnQuoteCancelOrder			m_fnOnRtnQuoteCancelOrder;
-	fnOnRtnQuoteOrder				m_fnOnRtnQuoteOrder;
+	fnOnRspQuoteInsertCancel		m_fnOnRspQuoteInsert;
+	fnOnRspQuoteInsertCancel		m_fnOnRspQuoteCancel;
+	fnOnRtnQuoteCancel				m_fnOnRtnQuoteCancel;
+	fnOnRtnQuote					m_fnOnRtnQuote;
 };
 

@@ -32,7 +32,7 @@ namespace QuantBox.CSharp2XSpeed
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate void fnOnRtnCancelOrder(IntPtr pTraderApi, ref DFITCOrderCanceledRtnField pCancelOrderData);
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate void fnOnRtnInstrumentStatus(IntPtr pTraderApi, ref DFITCInstrumentStatusField pInstrumentStatus);
+    public delegate void fnOnRtnExchangeStatus(IntPtr pTraderApi, ref DFITCExchangeStatusRtnField pRtnExchangeStatusData);
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate void fnOnRtnMatchedInfo(IntPtr pTraderApi, ref DFITCMatchRtnField pRtnMatchData);
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
@@ -44,9 +44,9 @@ namespace QuantBox.CSharp2XSpeed
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate void fnOnRtnQuoteSubscribe(IntPtr pTraderApi, ref DFITCQuoteSubscribeRtnField pRtnQuoteSubscribeData);
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate void fnOnRspQuoteInsertCancelOrder(IntPtr pTraderApi, ref DFITCQuoteOrderRspField pRspQuoteOrderData,ref DFITCErrorRtnField pErrorInfo);
+    public delegate void fnOnRspQuoteInsertCancel(IntPtr pTraderApi, ref DFITCQuoteRspField pRspQuoteData,ref DFITCErrorRtnField pErrorInfo);
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate void fnOnRtnQuoteOrder(IntPtr pTraderApi, ref DFITCQuoteOrderRtnField pRtnQuoteOrderData);
+    public delegate void fnOnRtnQuote(IntPtr pTraderApi, ref DFITCQuoteRtnField pRtnQuoteData);
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate void fnOnRtnQuoteCancelOrder(IntPtr pTraderApi, ref DFITCQuoteCanceledRtnField pRtnQuoteCanceledData);
+    public delegate void fnOnRtnQuoteCancel(IntPtr pTraderApi, ref DFITCQuoteCanceledRtnField pRtnQuoteCanceledData);
 }

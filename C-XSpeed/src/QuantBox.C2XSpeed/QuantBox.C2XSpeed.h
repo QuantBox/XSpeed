@@ -56,15 +56,15 @@ typedef void (__stdcall *fnOnRspQryPosition)(void* pTraderApi,DFITCPositionInfoR
 typedef void (__stdcall *fnOnRspQryPositionDetail)(void* pTraderApi,DFITCPositionDetailRtnField * pPositionDetailRtn,DFITCErrorRtnField * pErrorInfo, bool bIsLast);
 typedef void (__stdcall *fnOnRspQrySpecifyInstrument)(void* pTraderApi,DFITCInstrumentRtnField * pInstrument,DFITCErrorRtnField * pErrorInfo, bool bIsLast);
 typedef void (__stdcall *fnOnRtnCancelOrder)(void* pTraderApi, DFITCOrderCanceledRtnField * pCancelOrderData);
-typedef void (__stdcall *fnOnRtnInstrumentStatus)(void* pTraderApi,DFITCInstrumentStatusField *pInstrumentStatus);
+typedef void (__stdcall *fnOnRtnExchangeStatus)(void* pTraderApi, DFITCExchangeStatusRtnField * pRtnExchangeStatusData);
 typedef void (__stdcall *fnOnRtnMatchedInfo)(void* pTraderApi,DFITCMatchRtnField * pRtnMatchData);
 typedef void (__stdcall *fnOnRtnOrder)(void* pTraderApi,DFITCOrderRtnField * pRtnOrderData);
 // 做市商询价与应价
 typedef void (__stdcall *fnOnRspQuoteSubscribe)(void* pTraderApi,DFITCQuoteSubscribeRspField * pRspQuoteSubscribeData);
 typedef void (__stdcall *fnOnRtnQuoteSubscribe)(void* pTraderApi,DFITCQuoteSubscribeRtnField * pRtnQuoteSubscribeData);
-typedef void (__stdcall *fnOnRspQuoteInsertCancelOrder)(void* pTraderApi,DFITCQuoteOrderRspField * pRspQuoteOrderData,DFITCErrorRtnField * pErrorInfo);
-typedef void (__stdcall *fnOnRtnQuoteOrder)(void* pTraderApi,DFITCQuoteOrderRtnField * pRtnQuoteOrderData);
-typedef void (__stdcall *fnOnRtnQuoteCancelOrder)(void* pTraderApi,DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData);
+typedef void (__stdcall *fnOnRspQuoteInsertCancel)(void* pTraderApi,DFITCQuoteRspField * pRspQuoteData,DFITCErrorRtnField * pErrorInfo);
+typedef void (__stdcall *fnOnRtnQuote)(void* pTraderApi,DFITCQuoteRtnField * pRtnQuoteData);
+typedef void (__stdcall *fnOnRtnQuoteCancel)(void* pTraderApi,DFITCQuoteCanceledRtnField * pRtnQuoteCanceledData);
 
 //创建接收消息队列，支持响应行情和交易
 QUANTBOXC2XSPEED_API void* __stdcall XSpeed_CreateMsgQueue();
@@ -85,16 +85,16 @@ QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQryMatchInfo(void* pMsgQueue,
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspCustomerCapital(void* pMsgQueue,fnOnRspCustomerCapital pCallback);
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnMarketData(void* pMsgQueue,fnOnMarketData pCallback);
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnCancelOrder(void* pMsgQueue,fnOnRtnCancelOrder pCallback);
-QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnInstrumentStatus(void* pMsgQueue,fnOnRtnInstrumentStatus pCallback);
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnExchangeStatus(void* pMsgQueue, fnOnRtnExchangeStatus pCallback);
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnOrder(void* pMsgQueue,fnOnRtnOrder pCallback);
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnMatchedInfo(void* pMsgQueue,fnOnRtnMatchedInfo pCallback);
 // 做市商
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteSubscribe(void* pMsgQueue,fnOnRspQuoteSubscribe pCallback);
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteSubscribe(void* pMsgQueue,fnOnRtnQuoteSubscribe pCallback);
-QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteInsertOrder(void* pMsgQueue,fnOnRspQuoteInsertCancelOrder pCallback);
-QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteCancelOrder(void* pMsgQueue,fnOnRspQuoteInsertCancelOrder pCallback);
-QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteCancelOrder(void* pMsgQueue,fnOnRtnQuoteCancelOrder pCallback);
-QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteOrder(void* pMsgQueue,fnOnRtnQuoteOrder pCallback);
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteInsert(void* pMsgQueue,fnOnRspQuoteInsertCancel pCallback);
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRspQuoteCancel(void* pMsgQueue,fnOnRspQuoteInsertCancel pCallback);
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuoteCancel(void* pMsgQueue,fnOnRtnQuoteCancel pCallback);
+QUANTBOXC2XSPEED_API void __stdcall XSpeed_RegOnRtnQuote(void* pMsgQueue,fnOnRtnQuote pCallback);
 
 //释放消息队列
 QUANTBOXC2XSPEED_API void __stdcall XSpeed_ReleaseMsgQueue(void* pMsgQueue);
