@@ -155,7 +155,8 @@ QUANTBOXC2XSPEED_API int __stdcall TD_SendOrder(
 	DFITCPriceType dbPrice,
 	DFITCOrderTypeType orderType,
 	DFITCOrderPropertyType orderProperty,
-	DFITCInstrumentTypeType nInstrumentType);
+	DFITCInstrumentTypeType nInstrumentType,
+	DFITCInsertType insertType);
 
 //³·µ¥
 QUANTBOXC2XSPEED_API void __stdcall TD_CancelOrder(

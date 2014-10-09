@@ -66,7 +66,8 @@ public:
 		DFITCPriceType dbPrice,
 		DFITCOrderTypeType orderType,
 		DFITCOrderPropertyType orderProperty,
-		DFITCInstrumentTypeType nInstrumentType);
+		DFITCInstrumentTypeType nInstrumentType,
+		DFITCInsertType insertType);
 	void ReqCancelOrder(
 		const string& szInstrumentId,
 		DFITCLocalOrderIDType localOrderID,

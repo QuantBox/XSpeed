@@ -91,7 +91,8 @@ namespace QuantBox.CSharp2XSpeed
             double dbPrice,
             DFITCOrderTypeType orderType,
             DFITCOrderPropertyType orderProperty,
-            DFITCInstrumentTypeType nInstrumentType);
+            DFITCInstrumentTypeType nInstrumentType,
+            DFITCInsertType insertType);
 
         [DllImport(CommApi.DllFileName, EntryPoint = "TD_SendQuoteOrder")]
         public static extern int TD_SendQuoteOrder(

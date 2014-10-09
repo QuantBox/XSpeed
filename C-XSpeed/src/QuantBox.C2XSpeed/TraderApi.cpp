@@ -475,7 +475,8 @@ long CTraderApi::ReqInsertOrder(
 	DFITCPriceType dbPrice,
 	DFITCOrderTypeType orderType,
 	DFITCOrderPropertyType orderProperty,
-	DFITCInstrumentTypeType nInstrumentType
+	DFITCInstrumentTypeType nInstrumentType,
+	DFITCInsertType insertType
 	)
 {
 	if (NULL == m_pApi)
@@ -502,7 +503,7 @@ long CTraderApi::ReqInsertOrder(
 	body->openCloseType = sOpenCloseType;
 	// Í¶±£
 	body->speculator = sSpeculator;
-	body->insertType = DFITC_BASIC_ORDER;
+	body->insertType = insertType;
 	body->orderType= orderType;
 	body->orderProperty = orderProperty;
 	body->instrumentType = nInstrumentType;
